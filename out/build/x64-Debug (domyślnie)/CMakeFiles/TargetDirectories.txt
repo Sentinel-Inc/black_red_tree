@@ -1,0 +1,5 @@
+E:/repo/BlckRedTree/out/build/x64-Debug (domyślnie)/CMakeFiles/edit_cache.dir
+E:/repo/BlckRedTree/out/build/x64-Debug (domyślnie)/CMakeFiles/rebuild_cache.dir
+E:/repo/BlckRedTree/out/build/x64-Debug (domyślnie)/BRT/CMakeFiles/BRT.dir
+E:/repo/BlckRedTree/out/build/x64-Debug (domyślnie)/BRT/CMakeFiles/edit_cache.dir
+E:/repo/BlckRedTree/out/build/x64-Debug (domyślnie)/BRT/CMakeFiles/rebuild_cache.dir
