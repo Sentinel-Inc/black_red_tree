@@ -213,7 +213,7 @@ namespace tree_test {
 
 int main()
 {
-
+	// nie wiem czy mi się uda 
 	tree_test::run_all();
 	return 0;
 }
