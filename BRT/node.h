@@ -181,6 +181,7 @@ template<class T>
 inline node<T>* node<T>::in_order(unsigned counter)
 {
 	if (counter == 0) return this;
+
 	node<T>* ptr_to_return = nullptr;
 
 	if (left) ptr_to_return = left->in_order(--counter);
@@ -189,7 +190,6 @@ inline node<T>* node<T>::in_order(unsigned counter)
 	if (ptr_to_return) return ptr_to_return;
 
 	return nullptr;
-
 
 }
 
