@@ -21,7 +21,7 @@ namespace my {
 			storage = {};
 		}
 		Map(const KEY& x, const VAL& y) {
-		
+
 			storage.append(pair<KEY, VAL>(x, y));
 		};
 		Map(pair<KEY, VAL> x) {
@@ -31,6 +31,9 @@ namespace my {
 
 		Map(const Map& other) { storage = other.storage; }; // this is possible due to operator= in tree.h
 		Map& operator=(const Map&);
+
+		iterator<Tree> begin();
+		iterator<Tree> end() {return nullptr;};
 
 		void insert_or_assign(pair<KEY, VAL>x);
 		void insert_or_assign(const KEY&, const VAL&);
@@ -66,6 +69,12 @@ namespace my {
 
 	}
 
+
+	template<class KEY, class VAL>
+	inline iterator<tree<pair< KEY, VAL>>> map<KEY, VAL>::begin()
+	{
+		return iterator<tree<pair< KEY, VAL>>>(storage.begin());
+	}
 
 	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert_or_assign(pair<KEY, VAL> x)
