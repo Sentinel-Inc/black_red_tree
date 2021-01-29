@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "tree.h"
 #include "pair.h"
+#include "map.h"
 #include <assert.h>
 
 // --------------tests--------------
@@ -41,10 +42,10 @@ namespace tree_test {
 		t.append(100);
 		t.append(10);
 		t.append(5);
-		assert(t.give_root()->search(1)->get_value() == 1);
-		assert(t.give_root()->search(100)->get_value() == 100);
-		assert(t.give_root()->search(0) == nullptr);
-		assert(t.give_root()->search(6)->get_value() == 6);
+		assert(t.search(1)->get_value() == 1);
+		assert(t.search(100)->get_value() == 100);
+		assert(t.search(0) == nullptr);
+		assert(t.search(6)->get_value() == 6);
 		std::clog << " [ ok ]\n";
 
 	}
@@ -82,11 +83,7 @@ namespace tree_test {
 		t.append(5);
 		t.append(11);
 
-		assert(
-			t.give_root()
-			->next(
-				t.give_root()->get_value()
-			)
+		assert(t.give_root()->next(t.give_root()->get_value())
 			->get_value() == 2
 		);
 		int temp_debug = t.give_root()->search(4)->next(t.give_root()->search(4)->get_value())->get_value();
@@ -194,7 +191,7 @@ namespace tree_test {
 
 			assert(t[search].second == 'f');
 		}
-		using pair = my::pair<int,std::string>;
+		using pair = my::pair<int, std::string>;
 		tree<pair> t;
 
 		t.append(pair(2, "a"));
@@ -226,7 +223,7 @@ namespace tree_test {
 		search.second = "f";
 
 		assert(t[search].second == "f");
-	
+
 
 
 		std::clog << " [ ok ]\n";
@@ -316,12 +313,109 @@ namespace tree_test {
 
 
 }
+namespace map_test {
+	void no_paremeter_constructor();
+	void size();
+	void copy_constructor();
+	void copy_operator();
 
+	void run_all() {
+
+		size();
+		no_paremeter_constructor();
+		copy_constructor();
+		copy_operator();
+	}
+	void no_paremeter_constructor() {
+		std::clog << "no_parem_constructor :\t";
+
+		my::map<int, char> m;
+		m.insert(5, 'a');
+		m.insert(-1, 'b');
+		m.insert(8, 'c');
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+		m.insert(2, 'g');
+		m.insert(2, 'h');
+		m.insert(7, 'i');
+		assert(m[5] == 'a');
+		assert(m[-1] == 'b');
+		assert(m[8] == 'c');
+		assert(m[-2] == 'e');
+		assert(m[-5] == 'f');
+		assert(m[7] == 'i');
+
+		std::clog << " [ ok ]\n";
+
+	}
+	void size() {
+		std::clog << "size :\t\t\t";
+
+		my::map<int, char> m;
+	
+		assert(m.size() == 0);
+		m.insert(5, 'a');
+		assert(m.size() == 1);
+		m.insert(-1, 'b');
+		assert(m.size() == 2);
+		m.insert(8, 'c');
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+		m.insert(2, 'g');
+		m.insert(2, 'h');
+		m.insert(7, 'i');
+		assert(m.size() == 8);
+		std::clog << " [ ok ]\n";
+	}
+
+	void copy_constructor() {
+		std::clog << "copy_constructor :\t\t";
+
+		my::map<int, char> m;
+
+		m.insert(5, 'a');
+		m.insert(-1, 'b');
+		m.insert(8, 'c');
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+		m.insert(2, 'g');
+		m.insert(2, 'h');
+		m.insert(7, 'i');
+		my::map<int, char> g(m);
+		assert(g.size() == 9);
+		g.insert(0, 'i');
+		assert(g.size() == 10);
+		std::clog << " [ ok ]\n";
+	}
+
+	void copy_operator() {
+		std::clog << "copy_operator :\t";
+
+		my::map<int, char> m(5,'h');
+
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+
+		my::map<int, char> g=m;
+		assert(g[3] == 'd');
+		assert(g[5] == 'h');
+
+		std::clog << " [ ok ]\n";
+		
+	}
+
+
+}
 
 int main()
 {
 	// nie wiem czy mi się uda 
 	tree_test::run_all();
+	map_test::run_all();
 
 	return 0;
 }

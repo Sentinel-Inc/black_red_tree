@@ -73,10 +73,17 @@ public:
 
 	size_t size();
 	void append(const T& value);
-	void append_or_replace(const T& value);
-	node<T>* in_order(unsigned counter) const { return root->in_order(counter); };
-	T& operator[](const T&);
 
+	void clear();
+	void append_or_replace(const T& value);
+	node<T>* in_order(unsigned counter) const { 
+	
+		if(root) return root->in_order(counter); 
+		else return root;
+	
+	};
+	T& operator[](const T&);
+	node<T>* search(const T&value ) { return root->search(value); };
 
 
 	iterator<tree<T>> begin() {
@@ -134,16 +141,17 @@ inline tree<T>::~tree()
 template<class T>
 inline tree<T>& tree<T>::operator=(const tree<T>& other)
 {
-	if (this == &other) reeturn* this;
-	this->root = new node<T>(*other.root);
-	size = other.size; return tree<T>();
+	if (this == &other) return* this;
+	if (other.root) this->root = new node<T>(*other.root);
+	else root = nullptr;
 	return *this;
 }
 
 template<class T>
 inline size_t tree<T>::size()
 {
-	return root->size();
+	if (root)return root->size();
+	else return 0;
 }
 
 template<class T>
@@ -151,6 +159,13 @@ inline void tree<T>::append(const T& value)
 {
 	if (root) return root->append(value);
 	else root = new node<T>(value);
+}
+
+template<class T>
+inline void tree<T>::clear()
+{
+	delete root;
+	root = nullptr;
 }
 
 template<class T>

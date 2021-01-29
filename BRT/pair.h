@@ -25,7 +25,13 @@ namespace my {
 			second = y;
 		
 		}
+		Pair(const KEY& x) //:first(x), second(y) {};
+		{
 
+			first = x;
+			second = {};
+
+		}
 
 		Pair(const Pair& y) {
 			first = y.first;
