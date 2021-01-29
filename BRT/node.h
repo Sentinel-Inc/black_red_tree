@@ -1,8 +1,14 @@
+#ifndef NODE_H
+#define NODE_H
 
+#include <assert.h>
 
 template<class T>
 class node {
 public:
+
+	// consider removing this outside the class 
+	// fixes warning and does not change anything
 	static const enum Color {
 		red = 0,
 		black = 1
@@ -16,16 +22,12 @@ public:
 	node<T>* search(const T&);
 	node<T>* acces_or_asign(const T&);
 	node<T>* end();
-	node<T>* next(T);
+	node<T>* next(const T& previous_value);
 	node<T>* in_order(unsigned&);
 	size_t size();
 
-
-	void append(T);
-	void append_or_replace(T);
-
-	friend node<int>* get_next(node<int>*);
-
+	void append(const T& value);
+	void append_or_replace(const T& value);
 
 	T& get_value();
 	~node();
@@ -37,8 +39,6 @@ protected:
 	node<T>* father;
 	node<T>* left;
 	node<T>* right;
-
-
 
 };
 
@@ -72,7 +72,6 @@ inline node<T>::node(node<T>* father, Color color, T value)
 	right = nullptr;
 	this->color = color;
 	this->value = value;
-
 
 }
 
@@ -111,7 +110,6 @@ inline node<T>::node(const node<T>& other)
 	}
 	else right = nullptr;
 
-
 }
 
 template<class T>
@@ -146,6 +144,8 @@ inline node<T>* node<T>::acces_or_asign(const T& value)
 
 	}
 
+	// TODO: this should return something
+	assert(false);
 
 }
 
@@ -166,7 +166,7 @@ inline node<T>* node<T>::end()
 }
 
 template<class T>
-inline node<T>* node<T>::next(T previous_value)
+inline node<T>* node<T>::next(const T& previous_value)
 {
 
 	if (previous_value == this->value && left) return left;
@@ -180,10 +180,6 @@ inline node<T>* node<T>::next(T previous_value)
 	}
 	if (father)return father->next(value);
 	else return nullptr;
-
-	
-
-
 
 }
 
@@ -215,7 +211,7 @@ inline size_t node<T>::size()
 }
 
 template<class T>
-inline void node<T>::append(T value)
+inline void node<T>::append(const T& value)
 {
 
 
@@ -229,7 +225,7 @@ inline void node<T>::append(T value)
 }
 
 template<class T>
-inline void node<T>::append_or_replace(T value)
+inline void node<T>::append_or_replace(const T& value)
 {
 
 	if (value < this->value && left) left->append(value);
@@ -254,3 +250,6 @@ inline node<T>::~node()
 	if (!right)delete right;
 	// if (!father)delete father // almost made dodo
 }
+
+
+#endif // !NODE_H

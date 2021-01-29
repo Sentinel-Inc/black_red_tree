@@ -4,22 +4,16 @@
 #include "node.h"
 #include <vector>
 #include <exception>
-#define MATI 0
-#define PIOTR 1
+
 
 struct out_of_range :public std::exception {
 	const char* what() const throw() {
 		return "out of range";
-
 	}
-
-
 };
 
 
-
-
-#if PIOTR
+// --- iterator over the tree ---
 
 template<typename tree>
 class iterator
@@ -61,43 +55,9 @@ public:
 	ValueType& operator*() { return *current_ptr; };
 };
 
-#else
-
-template <typename tree>
-class imperator {
-public:
-	using ValueType = tree::ValueType;
-public:
-	imperator<tree>(tree* x) : ptr(x), counter(0) {};
-	imperator begin() { return imperator(root); }
-	imperator& operator++() {
-		++counter;
-
-	}
-
-private:
-	ValueType* ptr;
-	size_t counter;
-};
-int counter = 0;
-node<int>* get_next(node<int>* cur) {
-	int current_counter = counter;
-	counter++;
-	if (cur->right) return cur->right;
-	counter++;
-	if (cur->left) return cur->left;
-	else {
-		if (cur->father->left == cur) return get_next(cur->father->right);
-		if (cur->father->right == cur) return get_next(cur->father->father);
-	}
 
 
-	if (counter == 0) return get_next(cur->right);
-	if (counter == 1) return get_next(cur->left);
-	if (counter == 2) return nullptr;
-}
-#endif
-
+// --- TREE ---
 
 template <class T>
 class tree {
@@ -112,8 +72,8 @@ public:
 	~tree<T>();
 
 	size_t size();
-	void append(T);
-	void append_or_replace(T);
+	void append(const T& value);
+	void append_or_replace(const T& value);
 	node<T>* in_order(unsigned counter) const { return root->in_order(counter); };
 	T& operator[](const T&);
 
@@ -187,14 +147,14 @@ inline size_t tree<T>::size()
 }
 
 template<class T>
-inline void tree<T>::append(T value)
+inline void tree<T>::append(const T& value)
 {
 	if (root) return root->append(value);
 	else root = new node<T>(value);
 }
 
 template<class T>
-inline void tree<T>::append_or_replace(T value)
+inline void tree<T>::append_or_replace(const T& value)
 {
 	if (!root) root->append_or_replace(value);
 	else root = new node<T>(value);
