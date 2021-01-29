@@ -18,13 +18,23 @@ namespace my {
 			second = {};
 		};
 
-		Pair(const KEY& x, const VAL& y) //:first(x), second(y) {};
+		//Pair(const KEY& x, const VAL& y) //:first(x), second(y) {};
+		//{
+		//
+		//	first = x;
+		//	second = y;
+		//
+		//}
+
+		Pair(KEY x, VAL y) //:first(x), second(y) {};
 		{
-		
+
 			first = x;
 			second = y;
-		
+
 		}
+
+
 		Pair(const KEY& x) //:first(x), second(y) {};
 		{
 

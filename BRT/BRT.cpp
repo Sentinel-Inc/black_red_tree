@@ -371,7 +371,7 @@ namespace map_test {
 	}
 
 	void copy_constructor() {
-		std::clog << "copy_constructor :\t\t";
+		std::clog << "copy_constructor :\t";
 
 		my::map<int, char> m;
 
@@ -385,16 +385,16 @@ namespace map_test {
 		m.insert(2, 'h');
 		m.insert(7, 'i');
 		my::map<int, char> g(m);
-		assert(g.size() == 9);
+		assert(g.size() == 8);
 		g.insert(0, 'i');
-		assert(g.size() == 10);
+		assert(g.size() == 9);
 		std::clog << " [ ok ]\n";
 	}
 
 	void copy_operator() {
-		std::clog << "copy_operator :\t";
+		std::clog << "copy_operator :\t\t";
 
-		my::map<int, char> m(5,'h');
+		my::map<int, char> m({ 5,'h' });
 
 		m.insert(3, 'd');
 		m.insert(-2, 'e');
@@ -407,7 +407,7 @@ namespace map_test {
 		std::clog << " [ ok ]\n";
 		
 	}
-
+	
 
 }
 

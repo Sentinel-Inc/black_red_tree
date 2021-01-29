@@ -6,6 +6,10 @@
 #include"pair.h"
 #include <exception>
 
+
+// --- iterator over the tree ---
+
+
 namespace my {
 	template<class KEY, class VAL>
 	class map {
@@ -16,18 +20,22 @@ namespace my {
 		Map() {
 			storage = {};
 		}
-		/*Map(const KEY& x, const VAL& y){
-			storage(pair<KEY, VAL>(x, y));
-		};*/
-		Map( KEY x, VAL y) {
-			pair<KEY, VAL> temp(x, y);
-			storage(temp);
+		Map(const KEY& x, const VAL& y) {
+		
+			storage.append(pair<KEY, VAL>(x, y));
+		};
+		Map(pair<KEY, VAL> x) {
+
+			storage.append(x);
 		};
 
 		Map(const Map& other) { storage = other.storage; }; // this is possible due to operator= in tree.h
 		Map& operator=(const Map&);
-		
-		void insert_or_assign(const KEY&,const VAL&);
+
+		void insert_or_assign(pair<KEY, VAL>x);
+		void insert_or_assign(const KEY&, const VAL&);
+		void insert(pair<KEY, VAL>x);
+		VAL find(const KEY&);
 		void insert(const KEY&, const VAL&);
 		void clear();
 
@@ -49,21 +57,40 @@ namespace my {
 
 	};
 	template<class KEY, class VAL>
-	inline map<KEY,VAL>& map<KEY, VAL>::operator=(const map<KEY,VAL>& other)
+	inline map<KEY, VAL>& map<KEY, VAL>::operator=(const map<KEY, VAL>& other)
 	{
 		if (this == &other)return *this;
 		storage = other.storage;
 		return *this;
 
-	
+
 	}
 
 
 	template<class KEY, class VAL>
+	inline void map<KEY, VAL>::insert_or_assign(pair<KEY, VAL> x)
+	{
+		storage.append_or_replace(x);
+
+	}
+
+	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert_or_assign(const KEY& x, const VAL& y)
 	{
-		storage.append_or_replace(pair<KEY,VAL>(x,y));
-	
+		storage.append_or_replace(pair<KEY, VAL>(x, y));
+
+	}
+	template<class KEY, class VAL>
+	inline void map<KEY, VAL>::insert(pair<KEY, VAL> x)
+	{
+		storage.append(x);
+	}
+	template<class KEY, class VAL>
+	inline VAL map<KEY, VAL>::find(const KEY& key)
+	{
+		auto temp = storage.search(key);
+		if (temp)return temp.second;
+		else throw std::out_of_range;
 	}
 	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert(const KEY& x, const VAL& y)
@@ -80,14 +107,14 @@ namespace my {
 	template<class KEY, class VAL>
 	inline size_t map<KEY, VAL>::size()
 	{
-	return 	storage.size();
+		return 	storage.size();
 
 	}
 	template<class  KEY, class VAL>
 	inline bool map<KEY, VAL>::empty()
 	{
 
-		
+
 		return storage.in_order != nullptr;
 	}
 
@@ -102,13 +129,13 @@ namespace my {
 	inline VAL& map<KEY, VAL>::operator[](KEY key)
 	{
 
-		
+
 		return	storage
-			.search(pair<KEY,VAL>(key))// node<pair<key,val>>* 
+			.search(pair<KEY, VAL>(key))// node<pair<key,val>>* 
 			->get_value()	// pair<key,val>&
 			.second;	// val
-		
-		
+
+
 
 	}
 
