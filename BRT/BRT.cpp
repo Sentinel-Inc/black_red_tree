@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include "tree.h"
-
+#include <assert.h>
 // --------------tests--------------
 
 namespace tree_test {
@@ -13,21 +13,21 @@ namespace tree_test {
 	void acces_or_asign();
 	void copy_constructor();
 	void copy_operator();
-
+	void in_order();
 
 	void run_all() {
 		search();
 		end();
 		next();
 		append_or_replace();
-	//	acces_or_asign();
-	//	copy_constructor();
-	//	copy_operator();
+		in_order();
+		//	acces_or_asign();
+		//	copy_constructor();
+		//	copy_operator();
 	}
 
 	void search() {
 		std::clog << "search :";
-		bool pass = true;
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -36,38 +36,37 @@ namespace tree_test {
 		t.append(100);
 		t.append(10);
 		t.append(5);
-		if (t.give_root()->search(1)->get_value() != 1) pass = false;
-		if (t.give_root()->search(100)->get_value() != 100) pass = false;
-		if (t.give_root()->search(0) != nullptr) pass = false;
-		if (t.give_root()->search(6)->get_value() != 6) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		assert(t.give_root()->search(1)->get_value() == 1);
+		assert(t.give_root()->search(100)->get_value() == 100);
+		assert(t.give_root()->search(0) == nullptr);
+		assert(t.give_root()->search(6)->get_value() == 6);
+		std::clog << " [ ok ]\n";
 
 	}
 	void end() {
 		std::clog << "end :";
-		bool pass = true;
+
 		tree<int> t(6);
-		if (t.give_root()->end()->get_value() != 6) pass = false;
+
+		assert(t.give_root()->end()->get_value() == 6);
 		t.append(4);
-		if (t.give_root()->end()->get_value() != 6) pass = false;
+		assert(t.give_root()->end()->get_value() == 4);
 		t.append(7);
-		if (t.give_root()->end()->get_value() != 7) pass = false;
+		assert(t.give_root()->end()->get_value() == 7);
 		t.append(8);
-		if (t.give_root()->end()->get_value() != 8) pass = false;
+		assert(t.give_root()->end()->get_value() == 8);
 		t.append(10);
-		if (t.give_root()->end()->get_value() != 10) pass = false;
+		assert(t.give_root()->end()->get_value() == 10);
 		t.append(9);
-		if (t.give_root()->end()->get_value() != 9) pass = false;
+		assert(t.give_root()->end()->get_value() == 9);
 		t.append(11);
-		if (t.give_root()->end()->get_value() != 11) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		assert(t.give_root()->end()->get_value() == 11);
+
+		std::clog << " [ ok ]\n";
 
 	}
 	void next() {
 		std::clog << "next :\t";
-		bool pass = true;
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -77,17 +76,28 @@ namespace tree_test {
 		t.append(10);
 		t.append(5);
 		t.append(11);
-		if (t.give_root()->next( t.give_root()->get_value() )->get_value() != 2) pass = false;
-		
-		if (t.give_root()->search(4)->next( t.give_root()->get_value() )->get_value() != 5) pass = false;
-		if (t.give_root()->search(5)->next( t.give_root()->get_value() )->get_value() != 100) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+
+		assert(
+			t.give_root()
+			->next(
+				t.give_root()->get_value()
+			)
+			->get_value() == 2
+		);
+		int temp_debug = t.give_root()->search(4)->next(t.give_root()->search(4)->get_value())->get_value();
+		assert(temp_debug == 5);
+
+		auto fifth = t.give_root()->search(5);
+		temp_debug = fifth->next(fifth->get_value())->get_value();
+
+		assert(temp_debug == 100);
+		std::clog << " [ ok ]\n";
+
 
 	}
 	void in_order() {
-		std::clog << "in_order :";
-		bool pass = true;
+		std::clog << "in_order :\n";
+
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -98,22 +108,22 @@ namespace tree_test {
 		t.append(5);
 		t.append(11);
 
-		if (t.give_root()->in_order(3)->get_value() != 4) pass = false;
+		assert(t.give_root()->in_order(3)->get_value() == 4);
 
-		if (t.give_root()->in_order(2)->get_value() != 1) pass = false;
-		if (t.give_root()->in_order(6)->get_value() != 10) pass = false;
-		if (t.give_root()->in_order(7)->get_value() != 11) pass = false;
+		assert(t.give_root()->in_order(2)->get_value() == 1);
+		assert(t.give_root()->in_order(6)->get_value() == 10);
+		assert(t.give_root()->in_order(7)->get_value() == 11);
 
-		if (t.give_root()->in_order(8) != nullptr) pass = false;
+		assert(t.give_root()->in_order(8) == nullptr);
 
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		std::clog << " [ ok ]\n";
+
 
 	}
 	void append_or_replace() {
 
 		std::clog << "append_or_replace :\t";
-		bool pass = true;
+
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -122,20 +132,16 @@ namespace tree_test {
 		t.append(100);
 		t.append(10);
 		t.append(5);
-		if (t.give_root()->search(1)->get_value() != 1) pass = false;
-		if (t.give_root()->search(100)->get_value() != 100) pass = false;
+
+		assert(t.give_root()->search(1)->get_value() == 1);
+
+		assert(t.give_root()->search(100)->get_value() == 100);
 		t.give_root()->append_or_replace(100);
-		if (t.give_root()->search(100)->get_value() != 100) pass = false;
+		assert(t.give_root()->search(100)->get_value() == 100);
+		assert(t.give_root()->search(0) == nullptr);
 
-		
+		std::clog << " [ ok ]\n";
 
-		if (t.give_root()->search(0) != nullptr) pass = false;
-		std::clog << "\n"<< t.size()<<"\n";
-		
-		//for (auto i : t) std::cout << i.get_value();
-
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
 
 	}
 	void acces_or_asign() {
