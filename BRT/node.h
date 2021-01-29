@@ -17,7 +17,7 @@ public:
 	node<T>* acces_or_asign(const T&);
 	node<T>* end();
 	node<T>* next(T);
-	node<T>* in_order(unsigned);
+	node<T>* in_order(unsigned&);
 	size_t size();
 
 	void append(T);
@@ -182,14 +182,16 @@ inline node<T>* node<T>::next(T previous_value)
 }
 
 template<class T>
-inline node<T>* node<T>::in_order(unsigned counter)
+inline node<T>* node<T>::in_order(unsigned& counter)
 {
+
 	if (counter == 0) return this;
+	counter--;
 	node<T>* ptr_to_return = nullptr;
 
-	if (left) ptr_to_return = left->in_order(--counter);
+	if (left) ptr_to_return = left->in_order(counter);
 	if (ptr_to_return) return ptr_to_return;
-	if (right) ptr_to_return = right->in_order(--counter);
+	if (right) ptr_to_return = right->in_order(counter);
 	if (ptr_to_return) return ptr_to_return;
 
 	return nullptr;

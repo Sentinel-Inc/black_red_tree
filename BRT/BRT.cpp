@@ -14,6 +14,8 @@ namespace tree_test {
 	void copy_constructor();
 	void copy_operator();
 	void in_order();
+	void no_parameter_constructor();
+
 
 	void run_all() {
 		search();
@@ -21,13 +23,14 @@ namespace tree_test {
 		next();
 		append_or_replace();
 		in_order();
-		//	acces_or_asign();
-		//	copy_constructor();
-		//	copy_operator();
+		acces_or_asign();
+		copy_constructor();
+		copy_operator();
+		no_parameter_constructor();
 	}
 
 	void search() {
-		std::clog << "search :";
+		std::clog << "search :\t\t";
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -44,7 +47,7 @@ namespace tree_test {
 
 	}
 	void end() {
-		std::clog << "end :";
+		std::clog << "end :\t\t\t";
 
 		tree<int> t(6);
 
@@ -66,7 +69,7 @@ namespace tree_test {
 
 	}
 	void next() {
-		std::clog << "next :\t";
+		std::clog << "next :\t\t\t";
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -96,7 +99,7 @@ namespace tree_test {
 
 	}
 	void in_order() {
-		std::clog << "in_order :\n";
+		std::clog << "in_order :\t\t";
 
 		tree<int> t(6);
 		t.append(2);
@@ -108,18 +111,25 @@ namespace tree_test {
 		t.append(5);
 		t.append(11);
 
-		assert(t.give_root()->in_order(3)->get_value() == 4);
+		unsigned counter = 3;
+		assert(t.give_root()->in_order(counter)->get_value() == 4);
 
-		assert(t.give_root()->in_order(2)->get_value() == 1);
-		assert(t.give_root()->in_order(6)->get_value() == 10);
-		assert(t.give_root()->in_order(7)->get_value() == 11);
+		counter = 2;
+		assert(t.give_root()->in_order(counter)->get_value() == 1);
 
-		assert(t.give_root()->in_order(8) == nullptr);
+		counter = 6;
+		assert(t.give_root()->in_order(counter)->get_value() == 10);
+
+		counter = 7;
+		assert(t.give_root()->in_order(counter)->get_value() == 11);
+		counter = 8;
+		assert(t.give_root()->in_order(counter) == nullptr);
 
 		std::clog << " [ ok ]\n";
 
 
 	}
+
 	void append_or_replace() {
 
 		std::clog << "append_or_replace :\t";
@@ -147,7 +157,7 @@ namespace tree_test {
 	void acces_or_asign() {
 
 		std::clog << "acces_or_asign :\t";
-		bool pass = true;
+
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -156,19 +166,55 @@ namespace tree_test {
 		t.append(100);
 		t.append(10);
 		t.append(5);
-		if (t[1] != 1) pass = false;
-		if (t[100] != 100) pass = false;
+		assert(t[1] == 1);
+		assert(t[100] == 100);
 		t.give_root()->append_or_replace(100);
-		if (t[100] != 100) pass = false;
-		if (t[0] != 0) pass = false;
-		if (t[6] != 6) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		assert(t[100] == 100);
+		assert(t[0] == 0);
+		assert(t[6] == 6);
+		std::clog << " [ ok ]\n";
+
+
+	}
+	void no_parameter_constructor() {
+		std::clog << "no_param_constructor :\t";
+
+		tree<int> t;
+		t.append(6);
+		t.append(2);
+		t.append(1);
+		t.append(4);
+		t.append(4);
+		t.append(100);
+		t.append(10);
+		t.append(5);
+		t.append(11);
+
+		unsigned counter = 3;
+		assert(t.give_root()->in_order(counter)->get_value() == 4);
+
+
+		counter = 2;
+		assert(t.give_root()->in_order(counter)->get_value() == 1);
+
+		counter = 6;
+		assert(t.give_root()->in_order(counter)->get_value() == 10);
+		counter = 7;
+		assert(t.give_root()->in_order(counter)->get_value() == 11);
+
+		counter = 8;
+		assert(t.give_root()->in_order(counter) == nullptr);
+
+
+		std::clog << " [ ok ]\n";
+
+
+
 
 	}
 	void copy_constructor() {
 		std::clog << "copy_constructor :\t";
-		bool pass = true;
+
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -179,19 +225,18 @@ namespace tree_test {
 		t.append(5);
 		tree<int> g(t);
 
-		if (t[1] != 1) pass = false;
-		if (t[100] != 100) pass = false;
+		assert(t[1] == 1);
+		assert(t[100] == 100);
 		t.give_root()->append_or_replace(100);
-		if (t[100] != 100) pass = false;
-		if (t[0] != 0) pass = false;
-		if (t[6] != 6) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		assert(t[100] == 100);
+		assert(t[0] == 0);
+		assert(t[6] == 6);
+		std::clog << " [ ok ]\n";
 
 	}
 	void copy_operator() {
-		std::clog << "copy_operator :\t";
-		bool pass = true;
+		std::clog << "copy_operator :\t\t";
+
 		tree<int> t(6);
 		t.append(2);
 		t.append(1);
@@ -202,14 +247,13 @@ namespace tree_test {
 		t.append(5);
 		tree<int> g = t;
 
-		if (t[1] != 1) pass = false;
-		if (t[100] != 100) pass = false;
+		assert(t[1] == 1);
+		assert(t[100] == 100);
 		t.give_root()->append_or_replace(100);
-		if (t[100] != 100) pass = false;
-		if (t[0] != 0) pass = false;
-		if (t[6] != 6) pass = false;
-		if (pass) std::clog << " [ ok ]\n";
-		else std::clog << " [ fail ]\n";
+		assert(t[100] == 100);
+		assert(t[0] == 0);
+		assert(t[6] == 6);
+		std::clog << " [ ok ]\n";
 
 	}
 
