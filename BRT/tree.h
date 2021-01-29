@@ -107,7 +107,7 @@ public:
 
 	tree<T>();
 	tree<T>(T);
-	tree<T>(const tree<T>&); // u need to rethink that
+	tree<T>(const tree<T>&); 
 	tree<T>& tree<T>::operator=(const tree<T>&);
 	~tree<T>();
 

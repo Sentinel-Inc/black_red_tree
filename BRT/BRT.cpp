@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "tree.h"
 #include <assert.h>
+
 // --------------tests--------------
 
 namespace tree_test {
@@ -157,21 +158,37 @@ namespace tree_test {
 	void acces_or_asign() {
 
 		std::clog << "acces_or_asign :\t";
+		using pair = std::pair<int, std::string>;
+		tree<pair> t;
 
-		tree<int> t(6);
-		t.append(2);
-		t.append(1);
-		t.append(4);
-		t.append(4);
-		t.append(100);
-		t.append(10);
-		t.append(5);
-		assert(t[1] == 1);
-		assert(t[100] == 100);
-		t.give_root()->append_or_replace(100);
-		assert(t[100] == 100);
-		assert(t[0] == 0);
-		assert(t[6] == 6);
+		t.append(pair(2, "a"));
+		t.append(pair(1, "b"));
+		t.append(pair(4, "c"));
+		t.append(pair(4, "d"));
+		t.append(pair(100, "c"));
+		t.append(pair(10, "e"));
+		t.append(pair(5, "f"));
+		
+		pair search(1, "NO");
+		
+		pair temo_debug = t[search];
+		assert(temo_debug.second == "b");
+		
+		search.first = 100;
+		search.second = "no";
+		assert(t[search].second == "c");
+
+		t.give_root()->append_or_replace((pair(100, "y")));
+		
+		assert(t[search].second == "y");
+		search.first = 0;
+		search.second = "s";
+
+		assert(t[search].second == "s");
+		search.first = 6;
+		search.second = "f";
+
+		assert(t[search].second == "f");
 		std::clog << " [ ok ]\n";
 
 
@@ -265,6 +282,7 @@ int main()
 {
 	// nie wiem czy mi się uda 
 	tree_test::run_all();
+
 	return 0;
 }
 
