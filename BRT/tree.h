@@ -4,8 +4,7 @@
 #include "node.h"
 #include <vector>
 #include <exception>
-#define MATI 0
-#define PIOTR 1
+
 
 struct out_of_range :public std::exception {
 	const char* what() const throw() {
@@ -16,10 +15,6 @@ struct out_of_range :public std::exception {
 
 };
 
-
-
-
-#if PIOTR
 
 template<typename tree>
 class iterator
@@ -60,44 +55,6 @@ public:
 	bool operator!=(const iterator<tree>& rhs) const { return current_ptr != rhs.current_ptr; };
 	ValueType& operator*() { return *current_ptr; };
 };
-
-#else
-
-template <typename tree>
-class imperator {
-public:
-	using ValueType = tree::ValueType;
-public:
-	imperator<tree>(tree* x) : ptr(x), counter(0) {};
-	imperator begin() { return imperator(root); }
-	imperator& operator++() {
-		++counter;
-
-	}
-
-private:
-	ValueType* ptr;
-	size_t counter;
-};
-int counter = 0;
-node<int>* get_next(node<int>* cur) {
-	int current_counter = counter;
-	counter++;
-	if (cur->right) return cur->right;
-	counter++;
-	if (cur->left) return cur->left;
-	else {
-		if (cur->father->left == cur) return get_next(cur->father->right);
-		if (cur->father->right == cur) return get_next(cur->father->father);
-	}
-
-
-	if (counter == 0) return get_next(cur->right);
-	if (counter == 1) return get_next(cur->left);
-	if (counter == 2) return nullptr;
-}
-#endif
-
 
 template <class T>
 class tree {

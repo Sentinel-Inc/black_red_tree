@@ -20,12 +20,8 @@ public:
 	node<T>* in_order(unsigned);
 	size_t size();
 
-
 	void append(T);
 	void append_or_replace(T);
-
-	friend node<int>* get_next(node<int>*);
-
 
 	T& get_value();
 	~node();
@@ -37,8 +33,6 @@ protected:
 	node<T>* father;
 	node<T>* left;
 	node<T>* right;
-
-
 
 };
 
