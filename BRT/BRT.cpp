@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "tree.h"
+#include "pair.h"
 #include <assert.h>
 
 // --------------tests--------------
@@ -158,7 +159,42 @@ namespace tree_test {
 	void acces_or_asign() {
 
 		std::clog << "acces_or_asign :\t";
-		using pair = std::pair<int, std::string>;
+
+		{
+			using pair = my::pair<int, char>;
+			tree<pair> t;
+
+			t.append(pair(2, 'a'));
+			t.append(pair(1, 'b'));
+			t.append(pair(4, 'c'));
+			t.append(pair(4, 'd'));
+			t.append(pair(100, 'c'));
+			t.append(pair(10, 'e'));
+			t.append(pair(5, 'f'));
+
+			pair search(1, 'n');
+
+			pair temp_debug = t[search];
+			assert(temp_debug.second == 'b');
+
+			search.first = 100;
+			search.second = 'n';
+
+			assert(t[search].second == 'c');
+
+			t.give_root()->append_or_replace((pair(100, 'y')));
+
+			assert(t[search].second == 'y');
+			search.first = 0;
+			search.second = 's';
+
+			assert(t[search].second == 's');
+			search.first = 6;
+			search.second = 'f';
+
+			assert(t[search].second == 'f');
+		}
+		using pair = my::pair<int,std::string>;
 		tree<pair> t;
 
 		t.append(pair(2, "a"));
@@ -168,18 +204,19 @@ namespace tree_test {
 		t.append(pair(100, "c"));
 		t.append(pair(10, "e"));
 		t.append(pair(5, "f"));
-		
-		pair search(1, "NO");
-		
-		pair temo_debug = t[search];
-		assert(temo_debug.second == "b");
-		
+
+		pair search(1, "n");
+
+		pair temp_debug = t[search];
+		assert(temp_debug.second == "b");
+
 		search.first = 100;
-		search.second = "no";
+		search.second = "n";
+
 		assert(t[search].second == "c");
 
 		t.give_root()->append_or_replace((pair(100, "y")));
-		
+
 		assert(t[search].second == "y");
 		search.first = 0;
 		search.second = "s";
@@ -189,6 +226,9 @@ namespace tree_test {
 		search.second = "f";
 
 		assert(t[search].second == "f");
+	
+
+
 		std::clog << " [ ok ]\n";
 
 

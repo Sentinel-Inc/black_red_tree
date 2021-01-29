@@ -144,9 +144,9 @@ inline node<T>* node<T>::acces_or_asign(const T& value)
 
 	}
 
-	// TODO: this should return something
+	// this should never happen :
 	assert(false);
-
+	return nullptr;
 }
 
 template<class T>

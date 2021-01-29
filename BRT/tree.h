@@ -66,7 +66,7 @@ public:
 public:
 
 	tree<T>();
-	tree<T>(T);
+	tree<T>(const T& value);
 	tree<T>(const tree<T>&); 
 	tree<T>& tree<T>::operator=(const tree<T>&);
 	~tree<T>();
@@ -110,7 +110,7 @@ inline tree<T>::tree()
 }
 
 template<class T>
-inline tree<T>::tree(T value)
+inline tree<T>::tree(const T& value)
 {
 	root = new node<T>(value);
 	
