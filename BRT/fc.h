@@ -6,7 +6,7 @@
 #include <fstream>
 
 
-template<class T = int>
+template<class T>
 void get_numbers(std::string path, const fc<T>& counter) {
 	
 	int temp;
