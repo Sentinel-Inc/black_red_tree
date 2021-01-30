@@ -439,7 +439,7 @@ namespace fc_test {
 		f.add_data(6);
 		f.add_data(7);
 		std::vector<int> test;
-		for (auto i : f) test.push_back(i);
+		for (auto i:f) test.push_back(i);
 		assert(test[0] == 5);
 		assert(test[1] == 6);
 		assert(test[2] == 7);
