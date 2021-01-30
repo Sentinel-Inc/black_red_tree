@@ -463,7 +463,7 @@ namespace map_test {
 
 
 	void iterator() {
-		my::map<int, int> m;
+		my::map<int, char> m;
 
 		m.insert(3, 'd');
 		m.insert(-2, 'e');
@@ -471,49 +471,35 @@ namespace map_test {
 		m.insert(2, 'g');
 		m.insert(2, 'h');
 		m.insert(7, 'i');
+		m.insert_or_assign(3, 'h');
 		std::vector<int> test;
-		//for (auto i : m) test.push_back(i);
-		/*assert(test[0] == 'd');
+		for (auto i : m) test.push_back(i.get_value().second);	//shorten that fucking thing asap
+		assert(test[0] == 'h');
 		assert(test[1] == 'e');
+		
+		assert(test[3] == 'g');
 
-		assert(test[3] == 'h');
-
-		assert(test[4] == 'i');*/
-
-		std::clog << "iterator :\t\t[ fail ]\n";
+		std::clog << "iterator :\t\t[ ok ]\n";
 
 	}
 
 	void insert_or_assign() {
-		std::clog << "insert_or_assign: \t\t";
+		std::clog << "insert_or_assign: \t";
 		
 		my::map<int, int> m;
 
-		int temp = m.size();
-
-		std::clog << temp;
 
 		m.insert_or_assign(2, 4);
-		 temp = m.size();
-
-		std::clog << temp;
 
 		m.insert_or_assign(1, 3);
-		 temp = m.size();
 
-		std::clog << temp;
-
-		m.insert_or_assign(3, 4);
+		m.insert_or_assign(2, 5);
 		 
 
-		assert(m[3] == 4);
+		assert(m[2] == 5);
 		assert(m[1] == 3);
-		assert(m[4] == 2);
-		 temp = m.size();
 
-		std::clog << temp;
-
-		assert(m.size() == 3);
+		assert(m.size() == 2);
 
 		std::clog << "[ ok ] \n";
 
@@ -525,11 +511,10 @@ namespace fc_test {
 	void copy_constructor();
 	void iterator();
 	void brackets_operator();
-	void size_test();
 
 	void run_all() {
 		std::clog << " ------- fc_test-------  \n";
-		//no_param_constructor();
+		no_param_constructor();
 		copy_constructor();
 		brackets_operator();
 		iterator();
@@ -576,14 +561,14 @@ namespace fc_test {
 		
 		fc<int> g(f);
 		std::vector<int> test;
-		/*for (auto i : g) test.push_back(i);
+		/*for (auto i : g) test.push_back(i.get_value().second);
 		assert(test[0] == 5);
 		assert(test[1] == 6);
-		assert(test[2] == 7);*/
+		assert(test[2] == 7);
 
-		//assert(g.size() == 3);
+		assert(g.size() == 3);*/
 
-		std::clog << "copy_constructor : \t\t[ ok ]\n";
+		std::clog << "copy_constructor : \t[ fail ]\n";
 
 	}
 
@@ -610,7 +595,7 @@ int main()
 	// nie wiem czy mi się uda 
 	tree_test::run_all();
 	map_test::run_all();
-	//fc_test::run_all();
+	fc_test::run_all();
 	
 
 	return 0;
