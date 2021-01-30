@@ -5,8 +5,6 @@
 #include "map.h"
 #include <fstream>
 
-
-
 template<class T>
 class fc {
 public:
@@ -150,3 +148,61 @@ inline fc<T>::fc<T>(const fc<T>&other)
 {
 	image = other.image;
 }
+
+//template<class T>
+//void get_numbers(std::string path, fc<T>& counter) {
+//
+//	int temp;
+//
+//	std::fstream plik;
+//	plik.open(path, std::ios::in);
+//	if (!plik.good()) {
+//		plik.close();
+//		return;
+//	}
+//
+//	while (!plik.eof()) {
+//		plik >> temp;
+//
+//		counter.add_data(temp);
+//	}
+//	plik.close();
+//}
+//template<>
+//void get_numbers(std::string path, fc<double>& counter) {
+//
+//	double temp;
+//
+//	std::fstream plik;
+//	plik.open(path, std::ios::in);
+//	if (!plik.good()) {
+//		plik.close();
+//		return;
+//	}
+//
+//	while (!plik.eof()) {
+//		plik >> temp;
+//
+//		counter.add_data(temp);
+//	}
+//	plik.close();
+//}
+//template<char>
+//void get_characters(std::string path, const fc<char>& counter) {
+//
+//	char temp;
+//
+//	std::fstream plik;
+//	plik.open(path, std::ios::in);
+//	if (!plik.good()) {
+//		plik.close();
+//		return;
+//	}
+//	while (plik.good()) {
+//		plik >> temp;
+//		counter.add_data(temp);
+//
+//	}
+//	plik.close();
+//
+//}
