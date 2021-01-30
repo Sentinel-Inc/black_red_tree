@@ -83,7 +83,11 @@ public:
 	
 	};
 	T& operator[](const T&);
-	node<T>* search(const T&value ) { return root->search(value); };
+
+	node<T>* search(const T& value ) { 
+		if (root)return root->search(value);
+		else return nullptr;
+	};
 
 
 	iterator<tree<T>> begin() {
@@ -101,13 +105,12 @@ protected:
 	
 	node<T>* root;
 	
-private:
-	//w dzisiejszych czasach nie ma prywatnosci nigdzie
+
 };
 
 
 
-#endif // !TREE_H
+#endif // TREE_H
 
 template<class T>
 inline tree<T>::tree()
@@ -150,7 +153,7 @@ inline tree<T>& tree<T>::operator=(const tree<T>& other)
 template<class T>
 inline size_t tree<T>::size()
 {
-	if (root)return root->size();
+	if (root) return root->size();
 	else return 0;
 }
 
@@ -171,7 +174,7 @@ inline void tree<T>::clear()
 template<class T>
 inline void tree<T>::append_or_replace(const T& value)
 {
-	if (!root) root->append_or_replace(value);
+	if (root) root->append_or_replace(value);
 	else root = new node<T>(value);
 }
 

@@ -30,7 +30,7 @@ namespace my {
 		};
 
 		Map(const Map& other) { storage = other.storage; }; // this is possible due to operator= in tree.h
-		Map& operator=(const Map&);
+		map<KEY, VAL>& operator=(const map<KEY, VAL>&);
 
 		iterator<Tree> begin();
 		iterator<Tree> end() {return nullptr;};
@@ -70,6 +70,8 @@ namespace my {
 	}
 
 
+	
+
 	template<class KEY, class VAL>
 	inline iterator<tree<pair< KEY, VAL>>> map<KEY, VAL>::begin()
 	{
@@ -98,8 +100,9 @@ namespace my {
 	inline VAL map<KEY, VAL>::find(const KEY& key)
 	{
 		auto temp = storage.search(key);
-		if (temp)return temp.second;
-		else throw std::out_of_range;
+		if (temp)return temp->get_value().second;
+		else return NULL;
+//		else throw std::out_of_range();
 	}
 	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert(const KEY& x, const VAL& y)

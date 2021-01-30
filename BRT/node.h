@@ -228,11 +228,14 @@ template<class T>
 inline void node<T>::append_or_replace(const T& value)
 {
 
-	if (value < this->value && left) left->append(value);
-	if (!left) this->left = new node<T>(this, node<T>::black, value);
-
-	if (value > this->value && right) right->append(value);
-	if (!right) this->right = new node<T>(this, node<T>::black, value);
+	if (value < this->value) {
+		if (left) left->append_or_replace(value);
+		else left = new node<T>(this, node<T>::black, value);
+	}
+	if (value > this->value) {
+		if (right) right->append_or_replace(value);
+		else  right = new node<T>(this, node<T>::black, value);
+	}
 	this->value = value;
 
 }
