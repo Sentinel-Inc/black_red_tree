@@ -234,6 +234,7 @@ inline void node<T>::append_or_replace(const T& value)
 	if (value < this->value) {
 		if (left) left->append_or_replace(value);
 		else left = new node<T>(this, node<T>::black, value);
+
 	}
 	else if (value > this->value) {
 		if (right) right->append_or_replace(value);
