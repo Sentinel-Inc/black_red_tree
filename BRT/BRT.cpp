@@ -504,7 +504,6 @@ namespace fc_test {
 	void copy_constructor();
 	void iterator();
 	void brackets_operator();
-	void size();
 
 	void run_all() {
 		std::clog << " ------- fc_test-------  \n";
@@ -514,7 +513,6 @@ namespace fc_test {
 		iterator();
 
 	};
-
 	
 	void no_param_constructor() {
 		fc<int> f;
@@ -592,6 +590,12 @@ int main()
 	map_test::run_all();
 	fc_test::run_all();
 	
+	fc<char> t;
+	get_characters("C:\\Users\\pc\\source\\repos\\test01.txt", t);
+	std::cout << t.size();
+	t.save_to_file("test01_output.txt");
+
+
 
 	return 0;
 }

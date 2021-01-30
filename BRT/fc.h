@@ -82,7 +82,19 @@ inline void fc<T>::add_data(T key)
 
 
 template<class T>
-void get_numbers(std::string path,  fc<T>& counter) {
+inline fc<T>::fc<T>()
+{
+	image;
+}
+
+template<class T>
+inline fc<T>::fc<T>(const fc<T>&other)
+{
+	image = other.image;
+}
+
+template<class T>
+void get_numbers(std::string path, fc<T>& counter) {
 
 	int temp;
 
@@ -119,7 +131,7 @@ void get_numbers(std::string path, fc<double>& counter) {
 	}
 	plik.close();
 }
-template<char>
+
 void get_characters(std::string path, fc<char>& counter) {
 
 	char temp;
@@ -128,6 +140,7 @@ void get_characters(std::string path, fc<char>& counter) {
 	plik.open(path, std::ios::in);
 	if (!plik.good()) {
 		plik.close();
+		assert(0);
 		return;
 	}
 	while (plik.good()) {
@@ -138,73 +151,3 @@ void get_characters(std::string path, fc<char>& counter) {
 	plik.close();
 
 }
-
-template<class T>
-inline fc<T>::fc<T>()
-{
-	image;
-}
-
-template<class T>
-inline fc<T>::fc<T>(const fc<T>&other)
-{
-	image = other.image;
-}
-
-//template<class T>
-//void get_numbers(std::string path, fc<T>& counter) {
-//
-//	int temp;
-//
-//	std::fstream plik;
-//	plik.open(path, std::ios::in);
-//	if (!plik.good()) {
-//		plik.close();
-//		return;
-//	}
-//
-//	while (!plik.eof()) {
-//		plik >> temp;
-//
-//		counter.add_data(temp);
-//	}
-//	plik.close();
-//}
-//template<>
-//void get_numbers(std::string path, fc<double>& counter) {
-//
-//	double temp;
-//
-//	std::fstream plik;
-//	plik.open(path, std::ios::in);
-//	if (!plik.good()) {
-//		plik.close();
-//		return;
-//	}
-//
-//	while (!plik.eof()) {
-//		plik >> temp;
-//
-//		counter.add_data(temp);
-//	}
-//	plik.close();
-//}
-//template<char>
-//void get_characters(std::string path, const fc<char>& counter) {
-//
-//	char temp;
-//
-//	std::fstream plik;
-//	plik.open(path, std::ios::in);
-//	if (!plik.good()) {
-//		plik.close();
-//		return;
-//	}
-//	while (plik.good()) {
-//		plik >> temp;
-//		counter.add_data(temp);
-//
-//	}
-//	plik.close();
-//
-//}
