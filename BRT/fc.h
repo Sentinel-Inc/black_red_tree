@@ -6,36 +6,36 @@
 #include <fstream>
 
 
-template<class T>
-void get_numbers(std::string path, const fc<T>& counter) {
-	
-	int temp;
-
-	std::fstream plik;
-	plik.open(path, std::ios::in);
-	if (!plik.good()) {
-		plik.close();
-		return;
-	}
-	
-	while (!plik.eof()) {
-		plik >> temp;
-
-		counter.add_data(temp);
-	}
-	plik.close();
-}
-template<class T = double>
-void get_numbers(std::string path, const fc<T>& counter) {
-
-	double temp;
-
-	std::fstream plik;
-	plik.open(path, std::ios::in);
-	if (!plik.good()) {
-		plik.close();
-		return;
-	}
+//template<class T>
+//void get_numbers(std::string path, const fc<T>& counter) {
+//	
+//	int temp;
+//
+//	std::fstream plik;
+//	plik.open(path, std::ios::in);
+//	if (!plik.good()) {
+//		plik.close();
+//		return;
+//	}
+//	
+//	while (!plik.eof()) {
+//		plik >> temp;
+//
+//		counter.add_data(temp);
+//	}
+//	plik.close();
+//}
+//template<class T = double>
+//void get_numbers(std::string path, const fc<T>& counter) {
+//
+//	double temp;
+//
+//	std::fstream plik;
+//	plik.open(path, std::ios::in);
+//	if (!plik.good()) {
+//		plik.close();
+//		return;
+//	}
 
 template<class T>
 class fc {
@@ -175,4 +175,14 @@ void get_characters(std::string path, fc<char>& counter) {
 
 }
 
+template<class T>
+inline fc<T>::fc()
+{
+	storage = {};
+}
 
+template<class T>
+inline fc<T>::fc<T>(const fc<T>&other)
+{
+	storage = other.storage;
+}

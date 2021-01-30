@@ -458,7 +458,7 @@ namespace fc_test {
 		
 		fc<int> g(f);
 		std::vector<int> test;
-		for (auto i : g) test.push_back(i);
+//		for (auto i : g) test.push_back(i);
 		assert(test[0] == 5);
 		assert(test[1] == 6);
 		assert(test[2] == 7);
@@ -478,7 +478,7 @@ int main()
 	tree_test::run_all();
 	map_test::run_all();
 
-	std::cout << "czesc";
+	
 
 	return 0;
 }
