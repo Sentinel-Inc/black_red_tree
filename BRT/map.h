@@ -88,11 +88,11 @@ namespace my {
 		storage.append_or_replace(pair<KEY, VAL>(x, y));
 
 	}
-	/*template<class KEY, class VAL>
+	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert(pair<KEY, VAL> x)
 	{
 		storage.append(x);
-	}*/
+	}
 	template<class KEY, class VAL>
 	inline VAL map<KEY, VAL>::find(const KEY& key)
 	{

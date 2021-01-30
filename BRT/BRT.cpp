@@ -490,15 +490,23 @@ namespace map_test {
 		my::map<int, int> m;
 
 		int temp = m.size();
-
 		std::clog << temp;
 
+		m.insert(1, 3);
+		
+		temp = m.size();
+		std::clog << temp;
+		
+		m.insert_or_assign(2, 5);
+		std::clog << temp;
+		
 		m.insert_or_assign(2, 4);
-		 temp = m.size();
-
+		 
 		std::clog << temp;
 
-		m.insert_or_assign(1, 3);
+		
+
+		
 		 temp = m.size();
 
 		std::clog << temp;
@@ -508,14 +516,13 @@ namespace map_test {
 
 		assert(m[3] == 4);
 		assert(m[1] == 3);
-		assert(m[4] == 2);
+		assert(m[2] == 4);
 		 temp = m.size();
 
-		std::clog << temp;
 
 		assert(m.size() == 3);
 
-		std::clog << "[ ok ] \n";
+		std::clog << " [ ok ] \n";
 
 	}
 }
@@ -525,7 +532,7 @@ namespace fc_test {
 	void copy_constructor();
 	void iterator();
 	void brackets_operator();
-	void size_test();
+	void size();
 
 	void run_all() {
 		std::clog << " ------- fc_test-------  \n";

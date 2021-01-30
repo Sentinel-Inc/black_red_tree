@@ -85,7 +85,7 @@ public:
 	T& operator[](const T&);
 
 	node<T>* search(const T& value ) { 
-		if (root)return root->search(value);
+		if (root) return root->search(value);
 		else return nullptr;
 	};
 
@@ -110,7 +110,7 @@ protected:
 
 
 
-#endif // TREE_H
+#endif // !TREE_H
 
 template<class T>
 inline tree<T>::tree()

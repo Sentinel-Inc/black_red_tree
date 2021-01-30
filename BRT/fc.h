@@ -73,7 +73,9 @@ inline void fc<T>::add_data(T key)
 	count += image.find(key);
 	
 
-	image.insert_or_assign(key,count);
+
+	image.insert_or_assign(key, count);
+
 
 
 }
@@ -140,7 +142,7 @@ void get_characters(std::string path, fc<char>& counter) {
 template<class T>
 inline fc<T>::fc<T>()
 {
-	;
+	image;
 }
 
 template<class T>

@@ -16,6 +16,7 @@ public:
 
 	node();
 	node(T);
+
 	node(node<T>*, Color, T);
 	node<T>& operator=(const node<T>&);
 	node(const node<T>&);
@@ -63,6 +64,8 @@ inline node<T>::node(T value)
 	this->value = value;
 
 }
+
+
 
 template<class T>
 inline node<T>::node(node<T>* father, Color color, T value)
@@ -232,11 +235,11 @@ inline void node<T>::append_or_replace(const T& value)
 		if (left) left->append_or_replace(value);
 		else left = new node<T>(this, node<T>::black, value);
 	}
-	if (value > this->value) {
+	else if (value > this->value) {
 		if (right) right->append_or_replace(value);
 		else  right = new node<T>(this, node<T>::black, value);
 	}
-	this->value = value;
+	else this->value = value;
 
 }
 
