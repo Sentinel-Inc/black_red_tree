@@ -1,7 +1,5 @@
 ﻿#include <iostream>
-#include "tree.h"
-#include "pair.h"
-#include "map.h"
+#include "fc.h"
 #include <assert.h>
 
 // --------------tests--------------
@@ -408,6 +406,49 @@ namespace map_test {
 		
 	}
 	
+
+}
+
+namespace fc_test {
+	void no_param_constructor();
+	void iterator();
+	void run_all() {
+		no_param_constructor();
+		iterator();
+	};
+
+	
+	void no_param_constructor() {
+		fc<int> f;
+		f.add_data(5);
+		f.add_data(5);
+		f.add_data(6); 
+		f.add_data(7);
+		assert(f.size() == 3);
+		f.add_data(8);
+		assert(f.size() == 3);
+		std::clog << "size :\t\t\t[ ok ]\n";
+		std::clog << "add data :\t\t[ ok ]\n";
+		std::clog << "no_param_constructor :\t[ ok ]\n";
+	}
+
+	void iterator() {
+		fc<int> f;
+		f.add_data(5);
+		f.add_data(5);
+		f.add_data(6);
+		f.add_data(7);
+		std::vector<int> test;
+		for (auto i : f) test.push_back(i);
+		assert(test[0] == 5);
+		assert(test[1] == 6);
+		assert(test[2] == 7);
+		std::clog << "iterator : \t\t[ ok ]\n";
+
+	}
+
+
+
 
 }
 
