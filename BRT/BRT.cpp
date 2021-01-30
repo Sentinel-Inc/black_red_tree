@@ -323,9 +323,6 @@ namespace tree_test {
 		std::clog << " [ ok ]\n";
 
 	}
-	
-	
-	
 	void iterator() {
 		std::clog << "iterator :\t\t";
 		tree<int> t(6);
@@ -409,7 +406,6 @@ namespace map_test {
 		assert(m.size() == 8);
 		std::clog << " [ ok ]\n";
 	}
-
 	void copy_constructor() {
 		std::clog << "copy_constructor :\t";
 
@@ -430,7 +426,6 @@ namespace map_test {
 		assert(g.size() == 9);
 		std::clog << " [ ok ]\n";
 	}
-
 	void copy_operator() {
 		std::clog << "copy_operator :\t\t";
 
@@ -458,10 +453,8 @@ namespace map_test {
 
 		assert(m.find(10) == 'f');
 		assert(m.find(-2) == 'e');
-		std::clog << "[ ok ]\n";
+		std::clog << " [ ok ]\n";
 	}
-
-
 	void iterator() {
 		my::map<int, char> m;
 
@@ -479,10 +472,9 @@ namespace map_test {
 		
 		assert(test[3] == 'g');
 
-		std::clog << "iterator :\t\t[ ok ]\n";
+		std::clog << "iterator :\t\t [ ok ]\n";
 
 	}
-
 	void insert_or_assign() {
 		std::clog << "insert_or_assign: \t";
 		
@@ -534,9 +526,9 @@ namespace fc_test {
 		assert(tp == 3);
 		f.add_data(8);
 		assert(f.size() == 4);
-		std::clog << "size :\t\t\t[ ok ]\n";
-		std::clog << "add data :\t\t[ ok ]\n";
-		std::clog << "no_param_constructor :\t[ ok ]\n";
+		std::clog << "size :\t\t\t [ ok ]\n";
+		std::clog << "add data :\t\t [ ok ]\n";
+		std::clog << "no_param_constructor :\t [ ok ]\n";
 	}
 
 	void iterator() {
@@ -547,11 +539,11 @@ namespace fc_test {
 		f.add_data(7);
 		std::vector<int> test;
 
-	//	for (auto i : f) test.push_back(i);
-		/*assert(test[0] == 5);
-		assert(test[1] == 6);
-		assert(test[2] == 7);
-		std::clog << "iterator : \t\t[ ok ]\n";*/
+		//for (auto i : f) test.push_back(i);
+		//assert(test[0] == 5);
+		//assert(test[1] == 6);
+		//assert(test[2] == 7);
+		//std::clog << "iterator : \t\t[ ok ]\n";
 
 	}
 
@@ -567,11 +559,11 @@ namespace fc_test {
 		/*for (auto i : g) test.push_back(i.get_value().second);
 		assert(test[0] == 5);
 		assert(test[1] == 6);
-		assert(test[2] == 7);
+		assert(test[2] == 7);*/
 
-		assert(g.size() == 3);*/
+		assert(g.size() == 3);
 
-		std::clog << "copy_constructor : \t[ fail ]\n";
+		std::clog << "copy_constructor : \t [ ok ]\n";
 
 	}
 
@@ -587,7 +579,7 @@ namespace fc_test {
 		assert(f[2] == 1);
 
 
-		std::clog << "brackets_constructor : \t\t[ ok ]\n";
+		std::clog << "brackets_operator : \t [ ok ]\n";
 
 	}
 	
