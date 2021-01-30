@@ -6,36 +6,6 @@
 #include <fstream>
 
 
-//template<class T>
-//void get_numbers(std::string path, const fc<T>& counter) {
-//	
-//	int temp;
-//
-//	std::fstream plik;
-//	plik.open(path, std::ios::in);
-//	if (!plik.good()) {
-//		plik.close();
-//		return;
-//	}
-//	
-//	while (!plik.eof()) {
-//		plik >> temp;
-//
-//		counter.add_data(temp);
-//	}
-//	plik.close();
-//}
-//template<class T = double>
-//void get_numbers(std::string path, const fc<T>& counter) {
-//
-//	double temp;
-//
-//	std::fstream plik;
-//	plik.open(path, std::ios::in);
-//	if (!plik.good()) {
-//		plik.close();
-//		return;
-//	}
 
 template<class T>
 class fc {
@@ -55,7 +25,7 @@ public:
 
 
 protected:
-	my::map<T, unsigned> storage;
+	my::map<T, unsigned> image;
 
 };
 
@@ -66,7 +36,7 @@ inline void fc<T>::save_to_file(const std::string path = "output.txt")
 {
 	std::fstream plik;
 	plik.open(path, std::ios::out);
-	for (auto i : storage) {
+	for (auto i : image) {
 		plik << i.get_value().first << "\t" << i.get_value().second << "\n";
 	}
 	plik.close();
@@ -76,36 +46,36 @@ template<class T>
 inline unsigned& fc<T>::operator[](const T& key)
 {
 
-	return storage[key];
+	return image[key];
 
 }
 
 template<class T>
 inline iterator<fc<T>> fc<T>::begin()
 {
-	return iterator<fc<T>>(storage.begin());
+	return iterator<fc<T>>(image.begin());
 }
 
 template<class T>
 inline iterator<fc<T>> fc<T>::end()
 {
-	return iterator<fc<T>>(storage.end());
+	return iterator<fc<T>>(image.end());
 }
 
 template<class T>
 inline size_t fc<T>::size()
 {
-	return storage.size();
+	return image.size();
 }
 
 template<class T>
 inline void fc<T>::add_data(T key)
 {
 	unsigned count = 1;
-	count += storage.find(key);
+	count += image.find(key);
 	
 
-	storage.insert_or_assign(my::pair<T,unsigned>(key, count));
+	image.insert_or_assign(key,count);
 
 
 }
@@ -170,7 +140,7 @@ void get_characters(std::string path, fc<char>& counter) {
 }
 
 template<class T>
-inline fc<T>::fc()
+inline fc<T>::fc<T>()
 {
 	;
 }
@@ -178,5 +148,5 @@ inline fc<T>::fc()
 template<class T>
 inline fc<T>::fc<T>(const fc<T>&other)
 {
-	storage = other.storage;
+	image = other.image;
 }

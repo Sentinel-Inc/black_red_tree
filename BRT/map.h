@@ -46,11 +46,8 @@ namespace my {
 		bool empty();
 
 		VAL& at(const KEY&);
-
-		//void erase(const KEY&);
 		VAL& operator[](KEY);
-		//void pop(const KEY&);
-		//void pop(KEY); todo
+		
 
 
 		~map() = default;
@@ -86,22 +83,22 @@ namespace my {
 	}
 
 	template<class KEY, class VAL>
-	inline void map<KEY, VAL>::insert_or_assign(const KEY& x, const VAL& y)
+	inline void map<KEY, VAL>::insert_or_assign(const KEY& x, const VAL& y)  
 	{
 		storage.append_or_replace(pair<KEY, VAL>(x, y));
 
 	}
-	template<class KEY, class VAL>
+	/*template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert(pair<KEY, VAL> x)
 	{
 		storage.append(x);
-	}
+	}*/
 	template<class KEY, class VAL>
 	inline VAL map<KEY, VAL>::find(const KEY& key)
 	{
 		auto temp = storage.search(key);
 		if (temp)return temp->get_value().second;
-		else return NULL;
+		else return 0;
 //		else throw std::out_of_range();
 	}
 	template<class KEY, class VAL>

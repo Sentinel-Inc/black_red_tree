@@ -502,7 +502,8 @@ namespace fc_test {
 		f.add_data(5);
 		f.add_data(6); 
 		f.add_data(7);
-		assert(f.size() == 3);
+		auto tp =  f.size();
+		assert(tp == 3);
 		f.add_data(8);
 		assert(f.size() == 4);
 		std::clog << "size :\t\t\t[ ok ]\n";
