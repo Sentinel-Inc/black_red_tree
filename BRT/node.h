@@ -229,10 +229,10 @@ inline void node<T>::append_or_replace(const T& value)
 {
 
 	if (value < this->value && left) left->append(value);
-	if (!left) this->left = new node<T>(this, node<T>::black, value);
+	else if(!left) this->left = new node<T>(this, node<T>::black, value);
 
 	if (value > this->value && right) right->append(value);
-	if (!right) this->right = new node<T>(this, node<T>::black, value);
+	else if(!right) this->right = new node<T>(this, node<T>::black, value);
 	this->value = value;
 
 }

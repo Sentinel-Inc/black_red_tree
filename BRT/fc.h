@@ -99,19 +99,13 @@ inline size_t fc<T>::size()
 }
 
 template<class T>
-inline void fc<T>::add_data(T data)
+inline void fc<T>::add_data(T key)
 {
 	unsigned count = 1;
-	try {
-		count += storage.find(data);
+	count += storage.find(key);
+	
 
-	}
-	catch (...) {
-		count = 1;
-
-	}
-
-	storage.insert_or_assign(my::pair<T, unsigned>(data, count));
+	storage.insert_or_assign(my::pair<T,unsigned>(key, count));
 
 
 }
@@ -178,7 +172,7 @@ void get_characters(std::string path, fc<char>& counter) {
 template<class T>
 inline fc<T>::fc()
 {
-	storage = {};
+	;
 }
 
 template<class T>

@@ -101,6 +101,7 @@ namespace my {
 	{
 		auto temp = storage.search(key);
 		if (temp)return temp->get_value().second;
+		else return NULL;
 //		else throw std::out_of_range();
 	}
 	template<class KEY, class VAL>

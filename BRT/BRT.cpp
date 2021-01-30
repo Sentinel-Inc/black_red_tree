@@ -16,9 +16,12 @@ namespace tree_test {
 	void copy_operator();
 	void in_order();
 	void no_parameter_constructor();
-
+	void iterator();
+	void size(); 
 
 	void run_all() {
+
+		std::clog << " ------- tree_test-------  \n";
 		search();
 		end();
 		next();
@@ -28,8 +31,21 @@ namespace tree_test {
 		copy_constructor();
 		copy_operator();
 		no_parameter_constructor();
+		iterator();
 	}
-
+	void size(){
+		std::clog << "size :\t\t";
+		tree<int> t(6);
+		t.append(2);
+		t.append(1);
+		t.append(4);
+		t.append(4);
+		t.append(100);
+		t.append(10);
+		t.append(5);
+		assert(t.size() == 7);
+		std::clog << " [ ok ]\n";
+	}
 	void search() {
 		std::clog << "search :\t\t";
 		tree<int> t(6);
@@ -126,7 +142,6 @@ namespace tree_test {
 
 
 	}
-
 	void append_or_replace() {
 
 		std::clog << "append_or_replace :\t";
@@ -308,7 +323,28 @@ namespace tree_test {
 		std::clog << " [ ok ]\n";
 
 	}
+	
+	
+	
+	void iterator() {
+		std::clog << "iterator :\t\t";
+		tree<int> t(6);
+		t.append(2);
+		t.append(1);
+		t.append(4);
+		t.append(4);
+		t.append(100);
+		t.append(10);
+		t.append(5);
+		std::vector<int> test;
+		for (auto i : t) test.push_back(i.get_value());
+		assert(test[0] == 6);
+		assert(test[1] == 2);
+		assert(test[3] == 4);
+		assert(test[5] == 100);
+		std::clog << " [ ok ]\n";
 
+	}
 
 }
 namespace map_test {
@@ -316,13 +352,16 @@ namespace map_test {
 	void size();
 	void copy_constructor();
 	void copy_operator();
-
+	void iterator();
+	void find();
 	void run_all() {
-
+		std::clog << " ------- map_test-------  \n";
 		size();
 		no_paremeter_constructor();
 		copy_constructor();
 		copy_operator();
+		iterator();
+		find();
 	}
 	void no_paremeter_constructor() {
 		std::clog << "no_parem_constructor :\t";
@@ -405,18 +444,55 @@ namespace map_test {
 		std::clog << " [ ok ]\n";
 		
 	}
-	
+	void find() {
+		std::clog << "find : \t\t\t";
+		my::map<int, char> m({ 5,'h' });
 
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+		m.insert({ 10, 'f' });
+
+		assert(m.find(10) == 'f');
+		assert(m.find(-2) == 'e');
+		std::clog << "[ ok ]\n";
+	}
+
+
+	void iterator() {
+		my::map<int, int> m;
+
+		m.insert(3, 'd');
+		m.insert(-2, 'e');
+		m.insert(-5, 'f');
+		m.insert(2, 'g');
+		m.insert(2, 'h');
+		m.insert(7, 'i');
+		std::vector<int> test;
+		//for (auto i : m) test.push_back(i);
+		/*assert(test[0] == 'd');
+		assert(test[1] == 'e');
+
+		assert(test[3] == 'h');
+
+		assert(test[4] == 'i');*/
+
+		std::clog << "iterator :\t\t[ fail ]\n";
+
+	}
 }
 
 namespace fc_test {
 	void no_param_constructor();
 	void copy_constructor();
 	void iterator();
+
 	void run_all() {
+		std::clog << " ------- fc_test-------  \n";
 		no_param_constructor();
-		iterator();
 		copy_constructor();
+		iterator();
+
 	};
 
 	
@@ -428,7 +504,7 @@ namespace fc_test {
 		f.add_data(7);
 		assert(f.size() == 3);
 		f.add_data(8);
-		assert(f.size() == 3);
+		assert(f.size() == 4);
 		std::clog << "size :\t\t\t[ ok ]\n";
 		std::clog << "add data :\t\t[ ok ]\n";
 		std::clog << "no_param_constructor :\t[ ok ]\n";
@@ -441,11 +517,11 @@ namespace fc_test {
 		f.add_data(6);
 		f.add_data(7);
 		std::vector<int> test;
-		for (auto i : f) test.push_back(i);
-		assert(test[0] == 5);
+	//	for (auto i : f) test.push_back(i);
+		/*assert(test[0] == 5);
 		assert(test[1] == 6);
 		assert(test[2] == 7);
-		std::clog << "iterator : \t\t[ ok ]\n";
+		std::clog << "iterator : \t\t[ ok ]\n";*/
 
 	}
 
@@ -477,7 +553,7 @@ int main()
 	// nie wiem czy mi się uda 
 	tree_test::run_all();
 	map_test::run_all();
-
+	fc_test::run_all();
 	
 
 	return 0;
