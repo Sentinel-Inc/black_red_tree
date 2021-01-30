@@ -411,10 +411,12 @@ namespace map_test {
 
 namespace fc_test {
 	void no_param_constructor();
+	void copy_constructor();
 	void iterator();
 	void run_all() {
 		no_param_constructor();
 		iterator();
+		copy_constructor();
 	};
 
 	
@@ -447,7 +449,25 @@ namespace fc_test {
 
 	}
 
+	void copy_constructor() {
+		fc<int> f;
+		f.add_data(5);
+		f.add_data(5);
+		f.add_data(6);
+		f.add_data(7);
+		
+		fc<int> g(f);
+		std::vector<int> test;
+		for (auto i : g) test.push_back(i);
+		assert(test[0] == 5);
+		assert(test[1] == 6);
+		assert(test[2] == 7);
 
+		assert(g.size() == 3);
+
+		std::clog << "copy_constructor : \t\t[ ok ]\n";
+
+	}
 
 
 }

@@ -6,65 +6,6 @@
 #include <fstream>
 
 
-template<class T = int>
-void get_numbers(std::string path, const fc<T>& counter) {
-	
-	int temp;
-
-	std::fstream plik;
-	plik.open(path, std::ios::in);
-	if (!plik.good()) {
-		plik.close();
-		return;
-	}
-	
-	while (!plik.eof()) {
-		plik >> temp;
-
-		counter.add_data(temp);
-	}
-	plik.close();
-}
-template<class T = double>
-void get_numbers(std::string path, const fc<T>& counter) {
-
-	double temp;
-
-	std::fstream plik;
-	plik.open(path, std::ios::in);
-	if (!plik.good()) {
-		plik.close();
-		return;
-	}
-
-	while (!plik.eof()) {
-		plik >> temp;
-
-		counter.add_data(temp);
-	}
-	plik.close();
-}
-template<char>
-void get_characters(std::string path, const fc<char>& counter) {
-
-	char temp;
-
-	std::fstream plik;
-	plik.open(path, std::ios::in);
-	if (!plik.good()) {
-		plik.close();
-		return;
-	}
-	while (plik.good()) {
-		plik >> temp;
-		counter.add_data(temp);
-
-	}
-	plik.close();
-
-}
-
-
 
 template<class T>
 class fc {
@@ -144,3 +85,64 @@ inline void fc<T>::add_data(T data)
 
 
 }
+
+
+template<class T>
+void get_numbers(std::string path,  fc<T>& counter) {
+
+	int temp;
+
+	std::fstream plik;
+	plik.open(path, std::ios::in);
+	if (!plik.good()) {
+		plik.close();
+		return;
+	}
+
+	while (!plik.eof()) {
+		plik >> temp;
+
+		counter.add_data(temp);
+	}
+	plik.close();
+}
+template<>
+void get_numbers(std::string path, fc<double>& counter) {
+
+	double temp;
+
+	std::fstream plik;
+	plik.open(path, std::ios::in);
+	if (!plik.good()) {
+		plik.close();
+		return;
+	}
+
+	while (!plik.eof()) {
+		plik >> temp;
+
+		counter.add_data(temp);
+	}
+	plik.close();
+}
+template<char>
+void get_characters(std::string path, fc<char>& counter) {
+
+	char temp;
+
+	std::fstream plik;
+	plik.open(path, std::ios::in);
+	if (!plik.good()) {
+		plik.close();
+		return;
+	}
+	while (plik.good()) {
+		plik >> temp;
+		counter.add_data(temp);
+
+	}
+	plik.close();
+
+}
+
+
