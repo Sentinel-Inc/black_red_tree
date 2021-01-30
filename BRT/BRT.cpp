@@ -478,6 +478,8 @@ int main()
 	tree_test::run_all();
 	map_test::run_all();
 
+	std::cout << "czesc";
+
 	return 0;
 }
 
