@@ -590,6 +590,20 @@ int main()
 	map_test::run_all();
 	fc_test::run_all();
 	
+
+	// thats a fun thing to run
+	tree<int> tr;
+	tr.append(1);
+	tr.append(2);
+	tr.append(3);
+	tr.append(4);
+	tr.append(5);
+	tr.append(6);
+	delete tr.in_order(4);
+	delete tr.give_root();
+	tr.in_order(3);
+	tr.in_order(5);
+
 	fc<char> t;
 	get_characters("C:\\Users\\pc\\source\\repos\\test01.txt", t);
 	std::cout << t.size();

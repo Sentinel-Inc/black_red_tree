@@ -54,6 +54,10 @@ namespace my {
 			return *this;
 
 		}
+
+		// zdecydowanie potrzebujemy opsow czemu te func t ak dzialaja a nie porownuja 
+		// obydwu elem
+
 		bool operator==(const Pair& rhs) const { return first == rhs.first; };
 		bool operator!=(const Pair& rhs) const { return first != rhs.first; };
 		bool operator< (const Pair& rhs) const { return first < rhs.first; };

@@ -24,7 +24,6 @@ public:
 
 	ValueType* current_ptr;
 
-	//unsigned counter;
 
 public:
 

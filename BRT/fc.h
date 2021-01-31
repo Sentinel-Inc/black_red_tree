@@ -12,7 +12,8 @@ public:
 	fc<T>();
 	fc<T>(const fc<T>&);
 
-	void save_to_file(const std::string);
+	void save_to_file(const std::string); // i dont know if it should be here
+										 // i would argue ze zadaniem klasy liczacej kolory nie jest zapisywanie do pliku
 	unsigned& operator[](const T&);
 	iterator<fc<T>> begin();
 	iterator<fc<T>> end();
@@ -84,7 +85,7 @@ inline void fc<T>::add_data(T key)
 template<class T>
 inline fc<T>::fc<T>()
 {
-	image;
+	image; // whats up with that?
 }
 
 template<class T>

@@ -7,8 +7,12 @@ template<class T>
 class node {
 public:
 
-	// consider removing this outside the class 
-	// fixes warning and does not change anything
+	// Consider removing this outside the class 
+	// Fixes warning and does not change anything
+	
+	// i tak naprawde w sumie to enumy sa niebezpieczne 
+	// bo maja za duzy scope 
+	// you should use "enum class"
 	static const enum Color {
 		red = 0,
 		black = 1
@@ -51,7 +55,7 @@ inline node<T>::node()
 	right(nullptr),
 	color(node<T>::black),
 	value(NULL)
-{} // and waht's the diffrence? 
+{} 
 
 
 template<class T>
@@ -71,8 +75,8 @@ template<class T>
 inline node<T>::node(node<T>* father, Color color, T value)
 {
 	this->father = father;
-	left = nullptr;
-	right = nullptr;
+	this->left = nullptr;
+	this->right = nullptr;
 	this->color = color;
 	this->value = value;
 
@@ -88,8 +92,9 @@ inline node<T>& node<T>::operator=(const node<T>& other)
 	color = other.color;
 	value = other.value;
 
-	if (!other.left)left = new node<T>(other.left);   // todo this shiet is crazy
-	if (!other.right)right = node<T>(other.right);
+	if (!other.left)left = new node<T>(other.left);
+	if (!other.right)right = node<T>(other.right); //there is no new here and it doesnt look like it 
+													// should be that way
 	return *this;
 }
 
@@ -120,8 +125,14 @@ inline node<T>* node<T>::search(const T& value)
 {
 	if (this->value == value) return this;
 
+
+
 	node<T>* ptr_to_return = nullptr;
 
+	// that doesnt look good
+	// idk czy tutaj ta kopia sie dzieje dobrze 
+	// w tym momencie zwracasz adres do noda ktory jest wewnbatrz twojego drzewa
+	// wiec ktos moze go usunac
 	if (value < this->value && left) ptr_to_return = left->search(value);
 
 	if (value > this->value && right) ptr_to_return = right->search(value);
@@ -132,6 +143,10 @@ inline node<T>* node<T>::search(const T& value)
 template<class T>
 inline node<T>* node<T>::acces_or_asign(const T& value)
 {
+	// mam wrazenie ze to zwracanie wszedzie ptr jest fchuj nie bezpieczne 
+	// nie znam jeszcze calej impl wiec mozliwe ze nie ma innego wyjscia
+	// ale metody sa publiczne wiec ktos moze ci usunac ptr 
+	// i rozjebac cale drzewo easly
 	if (value == this->value) return this;
 
 	if (value < this->value) {
@@ -155,7 +170,7 @@ inline node<T>* node<T>::acces_or_asign(const T& value)
 template<class T>
 inline node<T>* node<T>::end()
 {
-
+	// caly czas z ptr
 	if (right) return right->end();
 	if (left) return left->end();
 
@@ -255,7 +270,7 @@ inline node<T>::~node()
 {
 	if (!left)delete left;
 	if (!right)delete right;
-	// if (!father)delete father // almost made dodo
+
 }
 
 
