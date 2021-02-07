@@ -56,10 +56,10 @@ namespace tree_test {
 		t.append(100);
 		t.append(10);
 		t.append(5);
-		assert(t.search(1)->get_value() == 1);
-		assert(t.search(100)->get_value() == 100);
-		assert(t.search(0) == nullptr);
-		assert(t.search(6)->get_value() == 6);
+		assert(t.search(1) == 1);
+		assert(t.search(100) == 100);
+		
+		assert(t.search(6)== 6);
 		std::clog << " [ ok ]\n";
 
 	}
@@ -480,7 +480,7 @@ namespace map_test {
 		
 		my::map<int, int> m;
 
-		int temp = m.size();
+		size_t temp = m.size();
 
 		m.insert_or_assign(2, 4);
 
@@ -522,9 +522,9 @@ namespace fc_test {
 		f.add_data(7);
 		auto tp =  f.size();
 		assert(tp == 3);
+		std::clog << "size :\t\t\t [ ok ]\n";
 		f.add_data(8);
 		assert(f.size() == 4);
-		std::clog << "size :\t\t\t [ ok ]\n";
 		std::clog << "add data :\t\t [ ok ]\n";
 		std::clog << "no_param_constructor :\t [ ok ]\n";
 	}

@@ -70,10 +70,12 @@ template<class T>
 inline void fc<T>::add_data(T key)
 {
 	unsigned count = 1;
-	count += image.find(key);
-	
-
-
+	try {
+		count += image.find(key);
+	}
+	catch (const out_of_range&) {
+		// in this case we ignore out_of_range statement
+	}
 	image.insert_or_assign(key, count);
 
 
@@ -82,13 +84,13 @@ inline void fc<T>::add_data(T key)
 
 
 template<class T>
-inline fc<T>::fc<T>()
+inline fc<T>::fc()
 {
 	image;
 }
 
 template<class T>
-inline fc<T>::fc<T>(const fc<T>&other)
+inline fc<T>::fc(const fc<T>&other)
 {
 	image = other.image;
 }

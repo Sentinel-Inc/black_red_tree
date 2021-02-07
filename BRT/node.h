@@ -2,17 +2,15 @@
 #define NODE_H
 
 #include <assert.h>
-
+	
 template<class T>
 class node {
 public:
-
-	// consider removing this outside the class 
-	// fixes warning and does not change anything
-	static const enum Color {
+const enum Color {
 		red = 0,
 		black = 1
 	};
+
 
 	node();
 	node(T);

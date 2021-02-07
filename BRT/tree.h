@@ -24,7 +24,6 @@ public:
 
 	ValueType* current_ptr;
 
-	//unsigned counter;
 
 public:
 
@@ -76,17 +75,21 @@ public:
 
 	void clear();
 	void append_or_replace(const T& value);
-	node<T>* in_order(unsigned counter) const { 
+	T& in_order(unsigned counter) const { 
 	
-		if(root) return root->in_order(counter); 
-		else return root;
+		if(root) return root->in_order(counter)->get_value(); 
+		else throw out_of_range();
 	
 	};
 	T& operator[](const T&);
 
-	node<T>* search(const T& value ) { 
-		if (root) return root->search(value);
-		else return nullptr;
+	T& search(const T& value ) { 
+		if (root) {
+			auto* ptr_to_return = root->search(value);
+			if(ptr_to_return) return ptr_to_return->get_value();
+			else throw out_of_range();
+		}
+		else throw out_of_range();
 	};
 
 
@@ -95,12 +98,10 @@ public:
 	};
 
 	iterator<tree<T>> end() {
-
-		//	return iterator<tree<T>>(root->end());
 		return iterator<tree<T>>(nullptr);
 	};
 
-node<T>* give_root() { return root; };
+	node<T>* give_root() { return root; };
 protected:
 	
 	node<T>* root;

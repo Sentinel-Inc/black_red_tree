@@ -33,7 +33,7 @@ namespace my {
 		map<KEY, VAL>& operator=(const map<KEY, VAL>&);
 
 		iterator<Tree> begin();
-		iterator<Tree> end() {return nullptr;};
+		iterator<Tree> end() { return nullptr; };
 
 		void insert_or_assign(pair<KEY, VAL>x);
 		void insert_or_assign(const KEY&, const VAL&);
@@ -47,7 +47,7 @@ namespace my {
 
 		VAL& at(const KEY&);
 		VAL& operator[](KEY);
-		
+
 
 
 		~map() = default;
@@ -67,7 +67,7 @@ namespace my {
 	}
 
 
-	
+
 
 	template<class KEY, class VAL>
 	inline iterator<tree<pair< KEY, VAL>>> map<KEY, VAL>::begin()
@@ -83,7 +83,7 @@ namespace my {
 	}
 
 	template<class KEY, class VAL>
-	inline void map<KEY, VAL>::insert_or_assign(const KEY& x, const VAL& y)  
+	inline void map<KEY, VAL>::insert_or_assign(const KEY& x, const VAL& y)
 	{
 		storage.append_or_replace(pair<KEY, VAL>(x, y));
 
@@ -96,10 +96,13 @@ namespace my {
 	template<class KEY, class VAL>
 	inline VAL map<KEY, VAL>::find(const KEY& key)
 	{
-		auto temp = storage.search(key);
-		if (temp)return temp->get_value().second;
-		else return 0;
-//		else throw std::out_of_range();
+		try {
+			return storage.search(key).second;
+		}
+		catch (const out_of_range&) {
+			throw out_of_range();
+		}
+		// this might throw out of range 
 	}
 	template<class KEY, class VAL>
 	inline void map<KEY, VAL>::insert(const KEY& x, const VAL& y)
@@ -130,9 +133,8 @@ namespace my {
 	template<class KEY, class VAL>
 	inline VAL& map<KEY, VAL>::at(const KEY& key)
 	{
-		auto temp_ptr = storage.search(key);
-		if (!temp_ptr)return *temp_ptr.second;
-		//
+		return storage.search(key).second;
+		// might throw aout of range 
 	}
 	template<class KEY, class VAL>
 	inline VAL& map<KEY, VAL>::operator[](KEY key)
@@ -141,7 +143,6 @@ namespace my {
 
 		return	storage
 			.search(pair<KEY, VAL>(key))// node<pair<key,val>>* 
-			->get_value()	// pair<key,val>&
 			.second;	// val
 
 
