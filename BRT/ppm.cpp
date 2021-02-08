@@ -81,9 +81,10 @@ ppm& ppm::operator=(const ppm& other)
 
 
 
-void ppm::set_pixel(size_t x, size_t y, pixel_24bit new_pixel)
+void ppm::set_pixel(const size_t& x, const size_t& y, const pixel_24bit& new_pixel)
 {
-	image[x * this->x + y] = new_pixel;
+	if ((x * this->y + y) >= image.size()) std::cout<<"\n break\n";
+	image[x * this->y + y] = new_pixel;
 }
 
 unsigned char ppm::check_color(int color) {
@@ -135,11 +136,14 @@ ppm::ppm(std::string file_path) {
 	read_data_from_file(file_path);
 
 }
-ppm::ppm(size_t x, size_t y):x(x),y(y)
+ppm::ppm(size_t x, size_t y)
 {
+	this->x = x;
+	this->y = y;
+
 	max_color = 255;
 	image.reserve(x * y);
-	for (auto i : image) i = pixel_24bit(0, 0, 0);
+	for (int i = 0; i < x * y;i++) image.push_back(pixel_24bit(0, 0, 0));
 }
 void ppm::read_data_from_file(std::string file_path)
 {
@@ -204,9 +208,7 @@ void ppm::read_data_from_file(std::string file_path)
 }
 
 void ppm::save_data_to_file(std::string file_path)
-{
-
-	std::fstream plik;
+{	std::fstream plik;
 	plik.open(file_path, std::ios::out);
 	plik << "P3\n";
 	plik << x << "\n";
@@ -214,11 +216,10 @@ void ppm::save_data_to_file(std::string file_path)
 	plik << max_color << "\n";
 
 	plik << "#generated with fc";
-	for (int i = 0; i < size() / 6; i++) {// wiersze powinny mieć max 60 znaków  
+	for (int i = 0; i < size(); i++) {
 
-		for (int j = 0; j < 6; j++) {
 			plik << image[i]<<' ';
-		}
+			if (i % 6 == 0) plik << '\n';// wiersze powinny mieć max 60 znaków  
 
 		plik << "\n";
 	}

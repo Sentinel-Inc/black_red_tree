@@ -14,7 +14,7 @@ public:
 	fc<T>(const fc<T>&);
 
 	void create(const std::string&);
-	void gen_img(const size_t&, const size_t&, const std::string&);
+	void gen_img(const size_t&, const std::string&);
 	unsigned& operator[](const T&);
 	iterator<fc<T>> begin();
 	iterator<fc<T>> end();
@@ -68,13 +68,15 @@ inline void fc<std::string>::create(const std::string& path)
 
 
 template<>
-inline void fc<int>::gen_img(const size_t& img_x, const size_t& img_y, const std::string& file_path)
+inline void fc<int>::gen_img(const size_t& img_y, const std::string& file_path)
 {
 	pixel_24bit red(255, 0, 0);
-	ppm graph(img_x, img_y);
+	ppm graph(image.size(), img_y);
 	size_t x_position = 0;
 	for (auto i : image) {
-		for (unsigned j = 0; j < i.get_value().second; j++) {
+		
+		for (unsigned j = 0; j < i.get_value().second && j < img_y; j++) {
+			
 			graph.set_pixel(x_position, j, red);
 
 
@@ -122,8 +124,6 @@ inline void fc<T>::add_data(T key)
 		// in this case we ignore out_of_range statement
 	}
 	image.insert_or_assign(key, count);
-
-
 
 }
 
@@ -195,7 +195,7 @@ void get_characters(std::string path, fc<std::wstring>& counter) {
 	while (plik.good()) {
 		while (2 > 1) {
 			plik >> temp;
-			if (temp == ' ' || temp == '\n' || temp == '\t') break;
+			if (temp == ' ' || temp == '\n' || temp == '\t' || !plik.good()) break;
 			sentence.push_back(temp);
 		}
 		counter.add_data(sentence);
@@ -220,7 +220,7 @@ void get_characters(std::string path, fc<std::string>& counter) {
 	while (plik.good()) {
 		while (2 > 1) {
 			plik >> temp;
-			if (temp == ' ' || temp == '\n' || temp == '\t') break;
+			if (temp == ' ' || temp == '\n' || temp == '\t' || !plik.good()) break;
 			sentence.push_back(temp);
 		}
 		counter.add_data(sentence);

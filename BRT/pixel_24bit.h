@@ -36,7 +36,7 @@ public:
 	// gen_hash przelicza kombinajê liczb r, g ,b i generuje pojedyñcz¹ wartoœæ unikaln¹ dla tej kombinacji
 
 	unsigned gen_hash(const unsigned&);
-	unsigned gen_hash();
+	
 
 	unsigned char get_r() { return r; }
 

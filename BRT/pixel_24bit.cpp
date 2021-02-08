@@ -15,8 +15,3 @@ unsigned pixel_24bit::gen_hash(const unsigned& max_color) { // zamiana z przestr
 							    //
 	return r * (max_color + 1) * (max_color + 1) + g * (max_color + 1) + b;
 }
-unsigned pixel_24bit::gen_hash() 
-{
-	return  r * 256 * 256 + g * 256 + b;
-}
-

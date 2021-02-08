@@ -597,7 +597,7 @@ int main()
 	t.create("test01_output.txt");
 	srand(time(NULL));
 
-	fc<wchar_t> biblia_pl; //uzywam wchar, zeby obslugiwac polskie znaki
+	fc<wchar_t> biblia_pl; 
 	fc<char> biblia_eng;
 	fc<wchar_t> biblia_it;
 	fc<std::wstring> slowa_biblia_pl;
@@ -605,30 +605,40 @@ int main()
 	fc<pixel_24bit> lena;
 	fc<int> los;
 
-	
-	get_characters("biblia-pl_ksiega_rdzaju.txt",biblia_pl);
+	std::cout << "loading biblia_pl...";
+	get_characters("../../../../BRT/biblia-pl_ksiega_rdzaju.txt",biblia_pl);
 	biblia_pl.create("znaki_pl.txt");
-	get_characters<char>("biblia-en.txt", biblia_eng);
+	std::cout << "\rbiblia_pl            \n";
+
+	std::cout << "loading biblia_eng...";
+	get_characters<char>("../../../../BRT/biblia-en.txt", biblia_eng);
 	biblia_eng.create("znaki_eng.txt");
+	std::cout << "\rbiblia_eng           \n";
 
-	get_characters<wchar_t>("biblia-it.txt", biblia_it);
+	std::cout << "loading biblia_it...";
+	get_characters<wchar_t>("../../../../BRT/biblia-it.txt", biblia_it);
 	biblia_it.create("znaki_it.txt");
+	std::cout << "\rbiblia_it           \n";
 
-	get_characters<std::wstring>("biblia-pl_ksiega_rdzaju.txt" , slowa_biblia_pl);
+
+	std::cout << "loading slowa_biblia_pl...";
+	get_characters<std::wstring>("../../../../BRT/biblia-pl_ksiega_rdzaju.txt" , slowa_biblia_pl);
 	slowa_biblia_pl.create("slowa_pl.txt");
-
+	std::cout << "\rslowa_biblia_pl           \n";
 	
 	lena.create("lena.txt");
 
+
+	std::cout << "loading random numbers...";
 	for (int i = 0; i < 1000000; i++)
 	{
 		los.add_data(rand() % 999 + 1);
 	}
-
-	los.gen_img(1000, 999, "outputIMG.ppm");
-
+	std::cout << "\rsaving random numbers...        ";
+	los.gen_img(1250, "outputIMG.ppm");
+	
 	los.create("los.txt");
-
+	std::cout << "\rrandom numbers           \n";
 
 	return 0;
 }
