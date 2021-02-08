@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include "fc.h"
 #include <assert.h>
+#include "pixel_24bit.h"
 
 // --------------tests--------------
 
@@ -593,8 +594,40 @@ int main()
 	fc<char> t;
 	get_characters("C:\\Users\\pc\\source\\repos\\test01.txt", t);
 	std::cout << t.size();
-	t.save_to_file("test01_output.txt");
+	t.create("test01_output.txt");
+	srand(time(NULL));
 
+	fc<wchar_t> biblia_pl; //uzywam wchar, zeby obslugiwac polskie znaki
+	fc<char> biblia_eng;
+	fc<wchar_t> biblia_it;
+	fc<std::wstring> slowa_biblia_pl;
+
+	fc<pixel_24bit> lena;
+	fc<int> los;
+
+	
+	get_characters("biblia-pl_ksiega_rdzaju.txt",biblia_pl);
+	biblia_pl.create("znaki_pl.txt");
+	get_characters<char>("biblia-en.txt", biblia_eng);
+	biblia_eng.create("znaki_eng.txt");
+
+	get_characters<wchar_t>("biblia-it.txt", biblia_it);
+	biblia_it.create("znaki_it.txt");
+
+	get_characters<std::wstring>("biblia-pl_ksiega_rdzaju.txt" , slowa_biblia_pl);
+	slowa_biblia_pl.create("slowa_pl.txt");
+
+	
+	lena.create("lena.txt");
+
+	for (int i = 0; i < 1000000; i++)
+	{
+		los.add_data(rand() % 999 + 1);
+	}
+
+	los.gen_img(1000, 999, "outputIMG.ppm");
+
+	los.create("los.txt");
 
 
 	return 0;
