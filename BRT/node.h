@@ -1,3 +1,8 @@
+// node wezel drzewa czerwonoczarnego 
+// posiada infrastruktore pod w pelni zaimplementowane drzewo czerwonoczarne 
+// na ten moment nie ma zaimplementowanego wyrownywania drzewa 
+// wzzystkie wezla sa koloru czarnego 
+
 #ifndef NODE_H
 #define NODE_H
 
@@ -18,17 +23,21 @@ const enum Color {
 	node(node<T>*, Color, T);
 	node<T>& operator=(const node<T>&);
 	node(const node<T>&);
-	node<T>* search(const T&);
-	node<T>* acces_or_asign(const T&);
-	node<T>* end();
-	node<T>* next(const T& previous_value);
-	node<T>* in_order(unsigned&);
-	size_t size();
+	node<T>* search(const T&); // wyszukuje i zwraca adres elementu szukanego
+				   // inaczej zwraca null ptr
+	node<T>* acces_or_asign(const T&);// nadpisuje obiekt o wartosci rownej szukanej
+					  // inaczej tworzy nowy node o wartosci szukanej
 
-	void append(const T& value);
-	void append_or_replace(const T& value);
+	node<T>* end(); // zwraca adres ostatniego elementu w kolejnosci przeszukiwania "In order"
+	node<T>* next(const T& previous_value);// zwraca adres kolejnego elementu wzgledem przeszukiwania "In order"
+	node<T>* in_order(unsigned&); // zwraca n-ty element w kolejnoœci "In order"
+					// inaczej zwraca nullptr
+	size_t size(); // zwraca ilosc wezlow w drzewie 
 
-	T& get_value();
+	void append(const T& value);// dodaje node o danym value 
+	void append_or_replace(const T& value); // dodaje albo zamienia w miejscu value
+
+	T& get_value(); // 
 	~node();
 
 protected:
@@ -49,7 +58,7 @@ inline node<T>::node()
 	right(nullptr),
 	color(node<T>::black),
 	value(NULL)
-{} // and waht's the diffrence? 
+{} 
 
 
 template<class T>
@@ -159,11 +168,6 @@ inline node<T>* node<T>::end()
 
 	return this;
 
-	//if (!right) return this;
-	//else return right->end();
-
-
-
 }
 
 template<class T>
@@ -185,7 +189,7 @@ inline node<T>* node<T>::next(const T& previous_value)
 }
 
 template<class T>
-inline node<T>* node<T>::in_order(unsigned& counter)
+inline node<T>* node<T>::in_order( unsigned& counter)
 {
 
 	if (counter == 0) return this;

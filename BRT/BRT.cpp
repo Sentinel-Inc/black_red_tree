@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "fc.h"
+#include "FreaquencyCounter.h"
 #include <assert.h>
 #include "pixel_24bit.h"
 
@@ -516,7 +516,7 @@ namespace fc_test {
 	};
 	
 	void no_param_constructor() {
-		fc<int> f;
+		FreaquencyCounter<int> f;
 		f.add_data(5);
 		f.add_data(5);
 		f.add_data(6); 
@@ -531,7 +531,7 @@ namespace fc_test {
 	}
 
 	void iterator() {
-		fc<int> f;
+		FreaquencyCounter<int> f;
 		f.add_data(5);
 		f.add_data(5);
 		f.add_data(6);
@@ -547,13 +547,13 @@ namespace fc_test {
 	}
 
 	void copy_constructor() {
-		fc<int> f;
+		FreaquencyCounter<int> f;
 		f.add_data(5);
 		f.add_data(5);
 		f.add_data(6);
 		f.add_data(7);
 		
-		fc<int> g(f);
+		FreaquencyCounter<int> g(f);
 		std::vector<int> test;
 		/*for (auto i : g) test.push_back(i.get_value().second);
 		assert(test[0] == 5);
@@ -568,7 +568,7 @@ namespace fc_test {
 
 	void brackets_operator() {
 
-		fc<int> f;
+		FreaquencyCounter<int> f;
 		f.add_data(5);
 		f.add_data(3);
 		f.add_data(2);
@@ -591,19 +591,19 @@ int main()
 	map_test::run_all();
 	fc_test::run_all();
 	
-	fc<char> t;
+	FreaquencyCounter<char> t;
 	get_characters("C:\\Users\\pc\\source\\repos\\test01.txt", t);
 	std::cout << t.size();
 	t.create("test01_output.txt");
 	srand(time(NULL));
 
-	fc<wchar_t> biblia_pl; 
-	fc<char> biblia_eng;
-	fc<wchar_t> biblia_it;
-	fc<std::wstring> slowa_biblia_pl;
+	FreaquencyCounter<wchar_t> biblia_pl; 
+	FreaquencyCounter<char> biblia_eng;
+	FreaquencyCounter<wchar_t> biblia_it;
+	FreaquencyCounter<std::wstring> slowa_biblia_pl;
 
-	fc<pixel_24bit> lena;
-	fc<int> los;
+	FreaquencyCounter<pixel_24bit> lena;
+	FreaquencyCounter<int> los;
 
 	std::cout << "loading biblia_pl...";
 	get_characters("../../../../BRT/biblia-pl_ksiega_rdzaju.txt",biblia_pl);

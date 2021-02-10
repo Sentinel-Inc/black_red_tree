@@ -1,23 +1,27 @@
+// Freaquency Counter (licznik czestotliwosci) 
+
+
 #pragma once
 #ifndef FC_H
 #define FC_H
-
-#include "map.h"
 #include <fstream>
 #include <stdio.h>
+#include "map.h"
+#include "file_exception.h"
 #include "ppm.h"
+exception::invalid_path_exception invalid_path_fc;
 template<class T>
-class fc {
+class FreaquencyCounter {
 public:
 
-	fc<T>();
-	fc<T>(const fc<T>&);
+	FreaquencyCounter<T>();
+	FreaquencyCounter<T>(const FreaquencyCounter<T>&);
 
 	void create(const std::string&);
 	void gen_img(const size_t&, const std::string&);
 	unsigned& operator[](const T&);
-	iterator<fc<T>> begin();
-	iterator<fc<T>> end();
+	iterator<FreaquencyCounter<T>> begin();
+	iterator<FreaquencyCounter<T>> end();
 	size_t size();
 	void add_data(T);
 
@@ -32,7 +36,7 @@ protected:
 #endif // !FC_H
 
 template<class T>
-inline void fc<T>::create(const std::string& path )
+inline void FreaquencyCounter<T>::create(const std::string& path )
 {
 	std::fstream plik;
 	plik.open(path, std::ios::out);
@@ -42,7 +46,17 @@ inline void fc<T>::create(const std::string& path )
 	plik.close();
 }
 template<>
-inline void fc<std::wstring>::create(const std::string& path)
+inline void FreaquencyCounter<wchar_t>::create(const std::string& path)
+{
+	std::wfstream plik;
+	plik.open(path, std::ios::out);
+	for (auto i : image) {
+		plik << i.get_value().first << "\t" << i.get_value().second << "\n";
+	}
+	plik.close();
+}
+
+inline void FreaquencyCounter<std::wstring>::create(const std::string& path)
 {
 	std::wfstream plik;
 	plik.open(path, std::ios::out);
@@ -53,7 +67,7 @@ inline void fc<std::wstring>::create(const std::string& path)
 	plik.close();
 }
 template<>
-inline void fc<std::string>::create(const std::string& path)
+inline void FreaquencyCounter<std::string>::create(const std::string& path)
 {
 	std::fstream plik;
 	plik.open(path, std::ios::out);
@@ -68,7 +82,7 @@ inline void fc<std::string>::create(const std::string& path)
 
 
 template<>
-inline void fc<int>::gen_img(const size_t& img_y, const std::string& file_path)
+inline void FreaquencyCounter<int>::gen_img(const size_t& img_y, const std::string& file_path)
 {
 	pixel_24bit red(255, 0, 0);
 	ppm graph(image.size(), img_y);
@@ -88,7 +102,7 @@ inline void fc<int>::gen_img(const size_t& img_y, const std::string& file_path)
 }
 
 template<class T>
-inline unsigned& fc<T>::operator[](const T& key)
+inline unsigned& FreaquencyCounter<T>::operator[](const T& key)
 {
 
 	return image[key];
@@ -96,25 +110,25 @@ inline unsigned& fc<T>::operator[](const T& key)
 }
 
 template<class T>
-inline iterator<fc<T>> fc<T>::begin()
+inline iterator<FreaquencyCounter<T>> FreaquencyCounter<T>::begin()
 {
-	return iterator<fc<T>>(image.begin());
+	return iterator<FreaquencyCounter<T>>(image.begin());
 }
 
 template<class T>
-inline iterator<fc<T>> fc<T>::end()
+inline iterator<FreaquencyCounter<T>> FreaquencyCounter<T>::end()
 {
-	return iterator<fc<T>>(image.end());
+	return iterator<FreaquencyCounter<T>>(image.end());
 }
 
 template<class T>
-inline size_t fc<T>::size()
+inline size_t FreaquencyCounter<T>::size()
 {
 	return image.size();
 }
 
 template<class T>
-inline void fc<T>::add_data(T key)
+inline void FreaquencyCounter<T>::add_data(T key)
 {
 	unsigned count = 1;
 	try {
@@ -129,19 +143,17 @@ inline void fc<T>::add_data(T key)
 
 
 template<class T>
-inline fc<T>::fc()
-{
-	image;
-}
+inline FreaquencyCounter<T>::FreaquencyCounter()
+{}
 
 template<class T>
-inline fc<T>::fc(const fc<T>& other)
+inline FreaquencyCounter<T>::FreaquencyCounter(const FreaquencyCounter<T>& other)
 {
 	image = other.image;
 }
 
 template<class T>
-void get_characters(std::string path, fc<T>& counter) {
+void get_characters(std::string path, FreaquencyCounter<T>& counter) {
 
 	T temp;
 
@@ -149,7 +161,7 @@ void get_characters(std::string path, fc<T>& counter) {
 	plik.open(path, std::ios::in);
 	if (!plik.good()) {
 		plik.close();
-		assert(0);
+		throw invalid_path_fc;
 		return;
 	}
 	while (plik.good()) {
@@ -161,7 +173,7 @@ void get_characters(std::string path, fc<T>& counter) {
 
 }
 template<>
-void get_characters(std::string path, fc<wchar_t>& counter) {
+void get_characters(std::string path, FreaquencyCounter<wchar_t>& counter) {
 
 	wchar_t temp;
 
@@ -169,7 +181,7 @@ void get_characters(std::string path, fc<wchar_t>& counter) {
 	plik.open(path, std::ios::in);
 	if (!plik.good()) {
 		plik.close();
-		assert(0);
+		throw invalid_path_fc;
 		return;
 	}
 	while (plik.good()) {
@@ -181,7 +193,7 @@ void get_characters(std::string path, fc<wchar_t>& counter) {
 
 }
 template<>
-void get_characters(std::string path, fc<std::wstring>& counter) {
+void get_characters(std::string path, FreaquencyCounter<std::wstring>& counter) {
 
 	wchar_t temp;
 	std::wstring sentence;
@@ -189,7 +201,7 @@ void get_characters(std::string path, fc<std::wstring>& counter) {
 	plik.open(path, std::ios::in);
 	if (!plik.good()) {
 		plik.close();
-		assert(0);
+		throw invalid_path_fc;
 		return;
 	}
 	while (plik.good()) {
@@ -206,7 +218,7 @@ void get_characters(std::string path, fc<std::wstring>& counter) {
 }
 
 template<>
-void get_characters(std::string path, fc<std::string>& counter) {
+void get_characters(std::string path, FreaquencyCounter<std::string>& counter) {
 
 	char temp;
 	std::string sentence;
@@ -214,7 +226,7 @@ void get_characters(std::string path, fc<std::string>& counter) {
 	plik.open(path, std::ios::in);
 	if (!plik.good()) {
 		plik.close();
-		assert(0);
+		throw invalid_path_fc;
 		return;
 	}
 	while (plik.good()) {

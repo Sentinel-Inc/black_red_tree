@@ -1,3 +1,6 @@
+// tree to funkcje do drzewa binarnego,
+// uzywa "node"
+
 #pragma once
 #ifndef TREE_H
 #define TREE_H
@@ -71,27 +74,14 @@ public:
 	~tree<T>();
 
 	size_t size();
-	void append(const T& value);
+	void append(const T& value); // dodaje nowa wartosc do drzewa 
 
-	void clear();
-	void append_or_replace(const T& value);
-	T& in_order(unsigned counter) const { 
-	
-		if(root) return root->in_order(counter)->get_value(); 
-		else throw out_of_range();
-	
-	};
+	void clear(); // usuwa drzewo 
+	void append_or_replace(const T& value); // dodaje albo zamienia node o podanym velue 
+	T& in_order(const unsigned& counter)  ;
 	T& operator[](const T&);
 
-	T& search(const T& value ) { 
-		if (root) {
-			auto* ptr_to_return = root->search(value);
-			if(ptr_to_return) return ptr_to_return->get_value();
-			else throw out_of_range();
-		}
-		else throw out_of_range();
-	};
-
+	T& search(const T& value);
 
 	iterator<tree<T>> begin() {
 		return iterator<tree<T>>(root);
@@ -104,7 +94,7 @@ public:
 	node<T>* give_root() { return root; };
 protected:
 	
-	node<T>* root;
+	node<T>* root; // bazowy wezel 
 	
 
 };
@@ -179,13 +169,14 @@ inline void tree<T>::append_or_replace(const T& value)
 	else root = new node<T>(value);
 }
 
-//template<class T>
-//inline node<T>& tree<T>::search(const T value)
-//{
-//
-//	if (!root) return root->search(value);
-//	else return nullptr;
-//}
+template<class T>
+inline T& tree<T>::in_order(const unsigned& counter)
+{
+
+	if (root) return root->in_order(counter)->get_value();
+	else throw out_of_range();
+
+}
 
 template<class T>
 inline T& tree<T>::operator[](const T& value)
@@ -195,3 +186,15 @@ inline T& tree<T>::operator[](const T& value)
 	else root = new node<T>(value);
 	return root->get_value();
 }
+
+template<class T>
+inline T& tree<T>::search(const T& value)
+{
+	if (root) {
+		auto* ptr_to_return = root->search(value);
+		if (ptr_to_return) return ptr_to_return->get_value();
+		else throw out_of_range();
+	}
+	else throw out_of_range();
+};
+

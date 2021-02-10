@@ -215,7 +215,7 @@ void ppm::save_data_to_file(std::string file_path)
 	plik << x << "\n";
 	plik << max_color << "\n";
 
-	plik << "#generated with fc";
+	plik << "#generated with FreaquencyCounter";
 	for (int i = 0; i < size(); i++) {
 
 			plik << image[i]<<' ';
