@@ -37,16 +37,16 @@ const enum Color {
 	void append(const T& value);// dodaje node o danym value 
 	void append_or_replace(const T& value); // dodaje albo zamienia w miejscu value
 
-	T& get_value(); // 
+	T& get_value(); // zwraca wartosc noda jako referencje 
 	~node();
 
 protected:
 
-	T value;
-	Color color;
-	node<T>* father;
-	node<T>* left;
-	node<T>* right;
+	T value; // wartosc przechowywana przez wezel
+	Color color; // kolor wezla
+	node<T>* father; // wskaznik na ojca wwezla
+	node<T>* left; // wskaznik na wezel o mniejszym value
+	node<T>* right; //  wskaznik na wezel o wiekszym value
 
 };
 
