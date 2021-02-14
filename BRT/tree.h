@@ -1,6 +1,9 @@
 // tree to funkcje do drzewa binarnego,
 // uzywa "node"
-
+// klasa opisuje funkcje dostepu do drzewa binarnego
+// 
+//
+// Autor: Piotr Drabik				Data: 25.12.2020
 #pragma once
 #ifndef TREE_H
 #define TREE_H
@@ -9,7 +12,7 @@
 #include <exception>
 
 
-struct out_of_range :public std::exception {
+struct out_of_range :public std::exception { // wyjatek out of range 
 	const char* what() const throw() {
 		return "out of range";
 	}
@@ -19,7 +22,9 @@ struct out_of_range :public std::exception {
 // --- iterator over the tree ---
 
 template<typename tree>
-class iterator
+class iterator  // iterator dla drzewa dziala na podstawie przeszukiwania drzewa in order 
+		// iterator bazuje na funkcji next nalezacej do klasy node 
+	       
 
 {
 public:
@@ -39,13 +44,13 @@ public:
 
 		return *this;
 	}
-	iterator<tree>& operator++() {
+	iterator<tree>& operator++() { // preinkrementacja 
 		current_ptr = current_ptr->next(current_ptr->get_value());
 
 		return *this;
 	};
 
-	iterator<tree> operator++(int) {
+	iterator<tree> operator++(int) { // postinkrementacja 
 		iterator<tree> tmp(*this);
 		operator++();
 		return tmp;
@@ -54,7 +59,7 @@ public:
 
 	bool operator==(const iterator<tree>& rhs) const { return current_ptr == rhs.current_ptr; };
 	bool operator!=(const iterator<tree>& rhs) const { return current_ptr != rhs.current_ptr; };
-	ValueType& operator*() { return *current_ptr; };
+	ValueType& operator*() { return *current_ptr; }; // dereferencja
 };
 
 
@@ -77,7 +82,7 @@ public:
 	void append(const T& value); // dodaje nowa wartosc do drzewa 
 
 	void clear(); // usuwa drzewo 
-	void append_or_replace(const T& value); // dodaje albo zamienia node o podanym velue 
+	void append_or_replace(const T& value); // dodaje albo zamienia node o podanym value 
 	T& in_order(const unsigned& counter)  ;
 	T& operator[](const T&);
 
@@ -158,8 +163,9 @@ inline void tree<T>::append(const T& value)
 template<class T>
 inline void tree<T>::clear()
 {
-	delete root;
-	root = nullptr;
+	if(root) delete root; // usuwanie elementow typu node ciagnie za soba usuniecie ich dzieci 
+			      // przez co usuwanie drzewa opiera sie na usunieciu roota
+	else root = nullptr;
 }
 
 template<class T>

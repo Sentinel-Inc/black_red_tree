@@ -48,7 +48,7 @@ public:
 	unsigned get_pixel_hash(unsigned position) { return image[position].gen_hash(max_color); }
 
 	void set_pixel(const size_t& x, const size_t& y, const pixel_24bit& new_pixel);
-
+	pixel_24bit operator[](size_t position) { return image[position]; }
 private:
 
 	unsigned char check_color(int);

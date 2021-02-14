@@ -1,7 +1,8 @@
 ﻿#include <iostream>
-#include "FreaquencyCounter.h"
-#include <assert.h>
+#include <assert.h> // na potrzeby testow
 #include "pixel_24bit.h"
+#include "FreaquencyCounter.h"
+
 
 // --------------tests--------------
 
@@ -18,7 +19,7 @@ namespace tree_test {
 	void in_order();
 	void no_parameter_constructor();
 	void iterator();
-	void size(); 
+	void size();
 
 	void run_all() {
 
@@ -34,7 +35,7 @@ namespace tree_test {
 		no_parameter_constructor();
 		iterator();
 	}
-	void size(){
+	void size() {
 		std::clog << "size :\t\t";
 		tree<int> t(6);
 		t.append(2);
@@ -59,8 +60,8 @@ namespace tree_test {
 		t.append(5);
 		assert(t.search(1) == 1);
 		assert(t.search(100) == 100);
-		
-		assert(t.search(6)== 6);
+
+		assert(t.search(6) == 6);
 		std::clog << " [ ok ]\n";
 
 	}
@@ -353,7 +354,7 @@ namespace map_test {
 	void iterator();
 	void find();
 	void insert_or_assign();
-	
+
 	void run_all() {
 		std::clog << " ------- map_test-------  \n";
 		size();
@@ -391,7 +392,7 @@ namespace map_test {
 		std::clog << "size :\t\t\t";
 
 		my::map<int, char> m;
-	
+
 		assert(m.size() == 0);
 		m.insert(5, 'a');
 		assert(m.size() == 1);
@@ -436,12 +437,12 @@ namespace map_test {
 		m.insert(-2, 'e');
 		m.insert(-5, 'f');
 
-		my::map<int, char> g=m;
+		my::map<int, char> g = m;
 		assert(g[3] == 'd');
 		assert(g[5] == 'h');
 
 		std::clog << " [ ok ]\n";
-		
+
 	}
 	void find() {
 		std::clog << "find : \t\t\t";
@@ -470,7 +471,7 @@ namespace map_test {
 		for (auto i : m) test.push_back(i.get_value().second);	//shorten that fucking thing asap
 		assert(test[0] == 'h');
 		assert(test[1] == 'e');
-		
+
 		assert(test[3] == 'g');
 
 		std::clog << "iterator :\t\t [ ok ]\n";
@@ -478,7 +479,7 @@ namespace map_test {
 	}
 	void insert_or_assign() {
 		std::clog << "insert_or_assign: \t";
-		
+
 		my::map<int, int> m;
 
 		size_t temp = m.size();
@@ -488,7 +489,7 @@ namespace map_test {
 		m.insert_or_assign(1, 3);
 
 		m.insert_or_assign(2, 5);
-		 
+
 
 		assert(m[2] == 5);
 		assert(m[1] == 3);
@@ -499,7 +500,6 @@ namespace map_test {
 
 	}
 }
-
 namespace fc_test {
 	void no_param_constructor();
 	void copy_constructor();
@@ -514,14 +514,14 @@ namespace fc_test {
 		iterator();
 
 	};
-	
+
 	void no_param_constructor() {
 		FreaquencyCounter<int> f;
 		f.add_data(5);
 		f.add_data(5);
-		f.add_data(6); 
+		f.add_data(6);
 		f.add_data(7);
-		auto tp =  f.size();
+		auto tp = f.size();
 		assert(tp == 3);
 		std::clog << "size :\t\t\t [ ok ]\n";
 		f.add_data(8);
@@ -552,7 +552,7 @@ namespace fc_test {
 		f.add_data(5);
 		f.add_data(6);
 		f.add_data(7);
-		
+
 		FreaquencyCounter<int> g(f);
 		std::vector<int> test;
 		/*for (auto i : g) test.push_back(i.get_value().second);
@@ -581,23 +581,22 @@ namespace fc_test {
 		std::clog << "brackets_operator : \t [ ok ]\n";
 
 	}
-	
+
 }
+
+#define DEBUG false 
 
 int main()
 {
-	// nie wiem czy mi się uda 
+
+#if DEBUG // podstawowe testy 
 	tree_test::run_all();
 	map_test::run_all();
 	fc_test::run_all();
-	
-	FreaquencyCounter<char> t;
-	get_characters("C:\\Users\\pc\\source\\repos\\test01.txt", t);
-	std::cout << t.size();
-	t.create("test01_output.txt");
+#else
 	srand(time(NULL));
 
-	FreaquencyCounter<wchar_t> biblia_pl; 
+	FreaquencyCounter<wchar_t> biblia_pl;
 	FreaquencyCounter<char> biblia_eng;
 	FreaquencyCounter<wchar_t> biblia_it;
 	FreaquencyCounter<std::wstring> slowa_biblia_pl;
@@ -606,27 +605,50 @@ int main()
 	FreaquencyCounter<int> los;
 
 	std::cout << "loading biblia_pl...";
-	get_characters("../../../../BRT/biblia-pl_ksiega_rdzaju.txt",biblia_pl);
+	get_characters("biblia-pl_ksiega_rdzaju.txt", biblia_pl);
 	biblia_pl.create("znaki_pl.txt");
-	std::cout << "\rbiblia_pl            \n";
+
+	printf("\33[2K\r"); // szybkie czyszczenie lini w konsoli i powrot na jej poczatek
+	
+
+	std::cout << "biblia_pl \t[ ok ] \trozmiar: " << biblia_pl.size() << std::endl;
 
 	std::cout << "loading biblia_eng...";
-	get_characters<char>("../../../../BRT/biblia-en.txt", biblia_eng);
+	get_characters<char>("biblia-en.txt", biblia_eng);
 	biblia_eng.create("znaki_eng.txt");
-	std::cout << "\rbiblia_eng           \n";
+
+	printf("%c[2K\r", 27);
+
+	std::cout << "biblia_eng \t[ ok ] \trozmiar: " << biblia_eng.size() << std::endl;
+
 
 	std::cout << "loading biblia_it...";
-	get_characters<wchar_t>("../../../../BRT/biblia-it.txt", biblia_it);
+	get_characters<wchar_t>("biblia-it.txt", biblia_it);
 	biblia_it.create("znaki_it.txt");
-	std::cout << "\rbiblia_it           \n";
+
+	printf("%c[2K\r", 27);
+	
+	std::cout << "biblia_it \t[ ok ] \trozmiar: " << biblia_it.size() << std::endl;
+
 
 
 	std::cout << "loading slowa_biblia_pl...";
-	get_characters<std::wstring>("../../../../BRT/biblia-pl_ksiega_rdzaju.txt" , slowa_biblia_pl);
+	get_characters<std::wstring>("biblia-pl_ksiega_rdzaju.txt", slowa_biblia_pl);
 	slowa_biblia_pl.create("slowa_pl.txt");
-	std::cout << "\rslowa_biblia_pl           \n";
+	printf("%c[2K\r", 27);
 	
+
+	std::cout << "slowa_biblia_pl [ ok ] \trozmiar: " << slowa_biblia_pl.size() << std::endl;
+
+
+	std::cout << "loading lena...";
+	get_characters<pixel_24bit>("lena.ppm", lena);
 	lena.create("lena.txt");
+	printf("%c[2K\r", 27);
+	
+	std::cout << "lena \t\t[ ok ] \trozmiar: " << lena.size() << std::endl;
+
+
 
 
 	std::cout << "loading random numbers...";
@@ -634,12 +656,15 @@ int main()
 	{
 		los.add_data(rand() % 999 + 1);
 	}
-	std::cout << "\rsaving random numbers...        ";
-	los.gen_img(1250, "outputIMG.ppm");
-	
-	los.create("los.txt");
-	std::cout << "\rrandom numbers           \n";
+	printf("%c[2K\r", 27);
 
+	std::cout << "saving random numbers...";
+	los.gen_img(1250, "outputIMG.ppm");
+
+	los.create("los.txt");
+	printf("%c[2K\r", 27);
+	std::cout << "random numbers \t[ ok ]" << std::endl;
+#endif
 	return 0;
 }
 

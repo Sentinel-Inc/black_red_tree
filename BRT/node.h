@@ -1,17 +1,20 @@
 // node wezel drzewa czerwonoczarnego 
 // posiada infrastruktore pod w pelni zaimplementowane drzewo czerwonoczarne 
 // na ten moment nie ma zaimplementowanego wyrownywania drzewa 
-// wzzystkie wezla sa koloru czarnego 
-
+// wszystkie wezly sa koloru czarnego 
+// Autor: Piotr Drabik				Data: 24.12.2020
 #ifndef NODE_H
 #define NODE_H
 
 #include <assert.h>
-	
+
 template<class T>
 class node {
 public:
-const enum Color {
+	using node_ptr = node<T>*;
+	using node_ref = node<T>&;
+
+	const enum Color {
 		red = 0,
 		black = 1
 	};
@@ -20,17 +23,17 @@ const enum Color {
 	node();
 	node(T);
 
-	node(node<T>*, Color, T);
+	node(node_ptr, Color, T);
 	node<T>& operator=(const node<T>&);
 	node(const node<T>&);
-	node<T>* search(const T&); // wyszukuje i zwraca adres elementu szukanego
+	node_ptr search(const T&); // wyszukuje i zwraca adres elementu szukanego
 				   // inaczej zwraca null ptr
-	node<T>* acces_or_asign(const T&);// nadpisuje obiekt o wartosci rownej szukanej
+	node_ptr acces_or_asign(const T&);// nadpisuje obiekt o wartosci rownej szukanej
 					  // inaczej tworzy nowy node o wartosci szukanej
 
-	node<T>* end(); // zwraca adres ostatniego elementu w kolejnosci przeszukiwania "In order"
-	node<T>* next(const T& previous_value);// zwraca adres kolejnego elementu wzgledem przeszukiwania "In order"
-	node<T>* in_order(unsigned&); // zwraca n-ty element w kolejnoœci "In order"
+	node_ptr end(); // zwraca adres ostatniego elementu w kolejnosci przeszukiwania "In order"
+	node_ptr next(const T& previous_value);// zwraca adres kolejnego elementu wzgledem przeszukiwania "In order"
+	node_ptr in_order(unsigned&); // zwraca n-ty element w kolejnoœci "In order"
 					// inaczej zwraca nullptr
 	size_t size(); // zwraca ilosc wezlow w drzewie 
 
@@ -44,9 +47,9 @@ protected:
 
 	T value; // wartosc przechowywana przez wezel
 	Color color; // kolor wezla
-	node<T>* father; // wskaznik na ojca wwezla
-	node<T>* left; // wskaznik na wezel o mniejszym value
-	node<T>* right; //  wskaznik na wezel o wiekszym value
+	node_ptr father; // wskaznik na ojca wwezla
+	node_ptr left; // wskaznik na wezel o mniejszym value
+	node_ptr right; //  wskaznik na wezel o wiekszym value
 
 };
 
@@ -58,7 +61,7 @@ inline node<T>::node()
 	right(nullptr),
 	color(node<T>::black),
 	value(NULL)
-{} 
+{}
 
 
 template<class T>
@@ -189,7 +192,7 @@ inline node<T>* node<T>::next(const T& previous_value)
 }
 
 template<class T>
-inline node<T>* node<T>::in_order( unsigned& counter)
+inline node<T>* node<T>::in_order(unsigned& counter)
 {
 
 	if (counter == 0) return this;

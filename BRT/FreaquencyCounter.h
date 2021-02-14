@@ -1,5 +1,11 @@
 // Freaquency Counter (licznik czestotliwosci) 
-
+// licznik dziala na podstawie my::map<K,V>
+// gdzie K = typ liczonej zmiennej 
+//       V = unsigned int licznik wystapien danej zmiennej 
+// Freaquency Counter pozwala tez na zapisywanie zebranych danych do pliku 
+//
+//
+// Autor: Piotr Drabik				Data: 04.02.2021
 
 #pragma once
 #ifndef FC_H
@@ -17,10 +23,10 @@ public:
 	FreaquencyCounter<T>();
 	FreaquencyCounter<T>(const FreaquencyCounter<T>&);
 
-	void create(const std::string&);
-	void gen_img(const size_t&, const std::string&);
+	void create(const std::string&); // zapisuje zebrane informacje do pliku textowego 
+	void gen_img(const size_t&, const std::string&); // tworzy obraz ppm zebranych danych 
 	unsigned& operator[](const T&);
-	iterator<FreaquencyCounter<T>> begin();
+	iterator<FreaquencyCounter<T>> begin(); // funkcje iteratora 
 	iterator<FreaquencyCounter<T>> end();
 	size_t size();
 	void add_data(T);
@@ -36,7 +42,7 @@ protected:
 #endif // !FC_H
 
 template<class T>
-inline void FreaquencyCounter<T>::create(const std::string& path )
+inline void FreaquencyCounter<T>::create(const std::string& path)
 {
 	std::fstream plik;
 	plik.open(path, std::ios::out);
@@ -88,9 +94,9 @@ inline void FreaquencyCounter<int>::gen_img(const size_t& img_y, const std::stri
 	ppm graph(image.size(), img_y);
 	size_t x_position = 0;
 	for (auto i : image) {
-		
+
 		for (unsigned j = 0; j < i.get_value().second && j < img_y; j++) {
-			
+
 			graph.set_pixel(x_position, j, red);
 
 
@@ -195,7 +201,9 @@ void get_characters(std::string path, FreaquencyCounter<wchar_t>& counter) {
 template<>
 void get_characters(std::string path, FreaquencyCounter<std::wstring>& counter) {
 
-	wchar_t temp;
+	wchar_t space = ' ';
+	wchar_t newline = '\n';
+	wchar_t tab = '\t';
 	std::wstring sentence;
 	std::wifstream plik;
 	plik.open(path, std::ios::in);
@@ -205,13 +213,12 @@ void get_characters(std::string path, FreaquencyCounter<std::wstring>& counter) 
 		return;
 	}
 	while (plik.good()) {
-		while (2 > 1) {
-			plik >> temp;
-			if (temp == ' ' || temp == '\n' || temp == '\t' || !plik.good()) break;
-			sentence.push_back(temp);
-		}
-		counter.add_data(sentence);
-		sentence.clear();
+
+
+		plik >> sentence;
+		if (!sentence.empty()) counter.add_data(sentence);
+
+
 	}
 	plik.close();
 
@@ -239,5 +246,13 @@ void get_characters(std::string path, FreaquencyCounter<std::string>& counter) {
 		sentence.clear();
 	}
 	plik.close();
+
+}
+
+template<>
+void get_characters(std::string path, FreaquencyCounter<pixel_24bit>& counter) {
+
+	ppm picture(path);
+	for (size_t i = 0; i < picture.size(); i++)counter.add_data(picture[i]);
 
 }

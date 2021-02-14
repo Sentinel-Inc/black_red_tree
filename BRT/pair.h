@@ -1,6 +1,9 @@
+// klasa pair opisuje pare liczb w ktorej pierwsza wartosc jest znaczaca, porownywana 
+// druga wartosc nie ma zadnych przywilejow
+// 
+// Autor: Piotr Drabik				Data: 04.02.2021
+
 #pragma once
-
-
 #ifndef PAIR_H
 #define PAIR_H
 
@@ -14,20 +17,13 @@ namespace my {
 
 	public:
 		Pair() {
-			first = {};
-			second = {};
-		};
+			first = {};  // oszustwo jezyka c 
+			second = {}; // poniewaz w parze moga znalezc sie dowolne typy zmiennych zwykly null na wartosc zerowa nie wystarcza
+		};		     
 
-		//Pair(const KEY& x, const VAL& y) //:first(x), second(y) {};
-		//{
-		//
-		//	first = x;
-		//	second = y;
-		//
-		//}
+		// kostruktor kopiujacy generowany jest automatycznie
 
-		Pair(KEY x, VAL y) //:first(x), second(y) {};
-		{
+		Pair(KEY x, VAL y) 		{
 
 			first = x;
 			second = y;
@@ -35,7 +31,7 @@ namespace my {
 		}
 
 
-		Pair(const KEY& x) //:first(x), second(y) {};
+		Pair(const KEY& x) 
 		{
 
 			first = x;
@@ -62,9 +58,10 @@ namespace my {
 		bool operator>=(const Pair& rhs) const { return first >= rhs.first; };
 		~pair<KEY, VAL>() = default;
 
-	public:
-		KEY first;
-		VAL second;
+	public: // pola nalezace do tej klasy sa public by imitowac zachowanie std::pair
+		// i jest do nich latwiejszy dostep tym sposobem
+		KEY first; // key 
+		VAL second; // value
 
 
 	};
